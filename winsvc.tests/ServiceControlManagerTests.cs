@@ -11,7 +11,7 @@ namespace winsvc.tests
         public void OpenControlServiceManager()
         {
             // Just checking for a lack of exceptions at this stage
-            using (new ServiceControlManager(null, 0))
+            using (ServiceControlManager.OpenServiceControlManager(null, 0))
             {
             }
         }
@@ -19,7 +19,7 @@ namespace winsvc.tests
         [Test]
         public void OpenService()
         {
-            using (var scm = new ServiceControlManager(null, (UInt32) SCM_ACCESS_MASK.SC_MANAGER_CONNECT))
+            using (var scm = ServiceControlManager.OpenServiceControlManager(null, (UInt32) SCM_ACCESS_MASK.SC_MANAGER_CONNECT))
             using (scm.OpenService("Spooler", (uint) SERVICE_ACCESS_MASK.SERVICE_QUERY_STATUS))
             {
 

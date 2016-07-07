@@ -4,9 +4,9 @@ using Microsoft.Win32.SafeHandles;
 
 namespace winsvc
 {
-    public sealed class ServiceControlManager : SafeHandleZeroOrMinusOneIsInvalid
+    public sealed class ServiceControlManager : SafeHandleZeroOrMinusOneIsInvalid, IServiceControlManager
     {
-        public ServiceControlManager(string machineName, UInt32 desiredAccess) : base(true)
+        private ServiceControlManager(string machineName, UInt32 desiredAccess) : base(true)
         {
             handle = NativeMethods.OpenSCManager(machineName, null, desiredAccess);
             if (handle == IntPtr.Zero)
@@ -15,9 +15,9 @@ namespace winsvc
             }
         }
 
-        protected override bool ReleaseHandle()
+        public static IServiceControlManager OpenServiceControlManager(string machineName, UInt32 desiredAccess)
         {
-            return NativeMethods.CloseServiceHandle(handle);
+            return new ServiceControlManager(machineName, desiredAccess);
         }
 
         public IService OpenService(string serviceName, UInt32 desiredAccess)
@@ -29,6 +29,11 @@ namespace winsvc
             }
 
             return new Service(serviceHandle);
+        }
+
+        protected override bool ReleaseHandle()
+        {
+            return NativeMethods.CloseServiceHandle(handle);
         }
     }
 }
