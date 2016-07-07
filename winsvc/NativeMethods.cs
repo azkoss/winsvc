@@ -17,5 +17,8 @@ namespace winsvc
 
         [DllImport("advapi32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
         internal static extern bool CloseServiceHandle(IntPtr serviceControlObject);
+
+        [DllImport("advapi32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
+        internal static extern IntPtr OpenService(IntPtr serviceControlObject, string serviceName, UInt32 desiredAccess);
     }
 }

@@ -12,5 +12,15 @@ namespace winsvc.tests
             {
             }
         }
+
+        [Test]
+        public void OpenService()
+        {
+            using (var scm = new ServiceControlManager(null, 1))
+            using (var service = scm.OpenService("Spooler", 4))
+            {
+
+            }
+        }
     }
 }

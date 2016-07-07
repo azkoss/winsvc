@@ -19,5 +19,16 @@ namespace winsvc
         {
             return NativeMethods.CloseServiceHandle(handle);
         }
+
+        public IService OpenService(string serviceName, UInt32 desiredAccess)
+        {
+            var serviceHandle = NativeMethods.OpenService(handle, serviceName, desiredAccess);
+            if (serviceHandle == IntPtr.Zero)
+            {
+                throw new Win32Exception();
+            }
+
+            return new Service(serviceHandle);
+        }
     }
 }
