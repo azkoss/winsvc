@@ -1,7 +1,8 @@
 ﻿// ReSharper disable InconsistentNaming
+
 using System;
 
-namespace winsvc
+namespace winsvc.AccessMasks
 {
     [Flags]
     public enum ACCESS_MASK : UInt32

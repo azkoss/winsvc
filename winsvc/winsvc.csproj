@@ -34,13 +34,13 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ACCESS_MASK.cs" />
+    <Compile Include="AccessMasks\ACCESS_MASK.cs" />
     <Compile Include="NativeMethods.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SCM_ACCESS_MASK.cs" />
+    <Compile Include="AccessMasks\SCM_ACCESS_MASK.cs" />
     <Compile Include="Service.cs" />
     <Compile Include="ServiceControlManager.cs" />
-    <Compile Include="SERVICE_ACCESS_MASK.cs" />
+    <Compile Include="AccessMasks\SERVICE_ACCESS_MASK.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
