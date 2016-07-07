@@ -5,7 +5,7 @@ using System;
 namespace winsvc.AccessMasks
 {
     [Flags]
-    public enum ACCESS_MASK : UInt32
+    public enum GENERIC_ACCESS_MASK : UInt32
     {
         DELETE = 0x00010000,
         READ_CONTROL = 0x00020000,

@@ -34,7 +34,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AccessMasks\ACCESS_MASK.cs" />
+    <Compile Include="AccessMasks\GENERIC_ACCESS_MASK.cs" />
     <Compile Include="IServiceControlManager.cs" />
     <Compile Include="NativeMethods.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
