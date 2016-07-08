@@ -68,9 +68,10 @@ namespace winsvc.tests
             using (var service = CreateDummyService(scm))
             {
                 service.Start(new string[] {});
-
+                
                 // TODO Wait until started
                 Thread.Sleep(1000);
+
                 ServiceStatus status = new ServiceStatus();
                 service.Control(SERVICE_CONTROL.SERVICE_CONTROL_STOP, ref status);
                 service.Delete();
