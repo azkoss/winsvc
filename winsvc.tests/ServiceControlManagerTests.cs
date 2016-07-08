@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using dummy_service;
 using NUnit.Framework;
 using winsvc.AccessMasks;
@@ -68,6 +69,8 @@ namespace winsvc.tests
             {
                 service.Start(new string[] {});
 
+                // TODO Wait until started
+                Thread.Sleep(1000);
                 ServiceStatus status = new ServiceStatus();
                 service.Control(SERVICE_CONTROL.SERVICE_CONTROL_STOP, ref status);
                 service.Delete();

@@ -8,6 +8,7 @@ namespace dummy_service
         private readonly AutoResetEvent _event = new AutoResetEvent(false);
 
         public static string Name = "Dummy Service";
+        private Thread _thread;
 
         public DummyService()
         {
@@ -19,16 +20,18 @@ namespace dummy_service
 
         protected override void OnStart(string[] args)
         {
-            new Thread(() =>
+            _thread = new Thread(() =>
             {
                 _event.WaitOne();
 
-            }).Start();
+            });
+            _thread.Start();
         }
 
         protected override void OnStop()
         {
             _event.Set();
+            _thread.Join();
         }
     }
 }
