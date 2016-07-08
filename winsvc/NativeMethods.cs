@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using winsvc.AccessMasks;
 
 namespace winsvc
 {
@@ -39,5 +40,11 @@ namespace winsvc
 
         [DllImport("advapi32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
         public static extern bool DeleteService(IntPtr serviceHandle);
+
+        [DllImport("advapi32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
+        public static extern bool StartService(IntPtr serviceHandle, int argCount, string[] argVectors);
+
+        [DllImport("advapi32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
+        public static extern bool ControlService(IntPtr serviceHandle, SERVICE_CONTROL control, ref ServiceStatus serviceStatus);
     }
 }

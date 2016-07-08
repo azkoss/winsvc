@@ -12,7 +12,7 @@ namespace winsvc.tests
         //public void OneTimeTearDown()
         //{
         //    using (var scm = ServiceControlManager.OpenServiceControlManager(null, (UInt32)SCM_ACCESS_MASK.SC_MANAGER_ALL_ACCESS))
-        //    using (var service = scm.OpenService("Dummy Service", (UInt32) SERVICE_ACCESS_MASK.SERVICE_ALL_ACCESS))
+        //    using (var service = scm.OpenService("Dummy Service", (UInt32)SERVICE_ACCESS_MASK.SERVICE_ALL_ACCESS))
         //    {
         //        service.Delete();
         //    }
@@ -42,24 +42,54 @@ namespace winsvc.tests
         [Test]
         public void CreateService()
         {
-            var path = typeof(DummyService).Assembly.Location;
 
             using (var scm = ServiceControlManager.OpenServiceControlManager(null, (UInt32)SCM_ACCESS_MASK.SC_MANAGER_CREATE_SERVICE))
-            using (var service = scm.CreateService(DummyService.Name,
-                                                   DummyService.Name,
-                                                   (uint) SERVICE_ACCESS_MASK.SERVICE_ALL_ACCESS,
-                                                   (uint) SERVICE_TYPE.SERVICE_WIN32_OWN_PROCESS,
-                                                   (uint) SERVICE_START_TYPE.SERVICE_AUTO_START,
-                                                   (uint) SERVICE_ERROR_CONTROL.SERVICE_ERROR_NORMAL,
-                                                   path,
-                                                   "",
-                                                   IntPtr.Zero,
-                                                   "",
-                                                   null,
-                                                   null))
+            using (var service = CreateDummyService(scm))
             {
                 service.Delete();
             }
+        }
+
+        [Test]
+        public void DeleteService()
+        {
+            using (var scm = ServiceControlManager.OpenServiceControlManager(null, (UInt32)SCM_ACCESS_MASK.SC_MANAGER_CREATE_SERVICE))
+            using (var service = CreateDummyService(scm))
+            {
+                service.Delete();
+            }
+        }
+
+        [Test]
+        public void StartService()
+        {
+            using (var scm = ServiceControlManager.OpenServiceControlManager(null, (UInt32)SCM_ACCESS_MASK.SC_MANAGER_CREATE_SERVICE))
+            using (var service = CreateDummyService(scm))
+            {
+                service.Start(new string[] {});
+
+                ServiceStatus status = new ServiceStatus();
+                service.Control(SERVICE_CONTROL.SERVICE_CONTROL_STOP, ref status);
+                service.Delete();
+            }
+        }
+
+        private static IService CreateDummyService(IServiceControlManager scm)
+        {
+            var path = typeof(DummyService).Assembly.Location;
+
+            return scm.CreateService(DummyService.Name, 
+                DummyService.Name,
+                (uint) SERVICE_ACCESS_MASK.SERVICE_ALL_ACCESS,
+                (uint) SERVICE_TYPE.SERVICE_WIN32_OWN_PROCESS,
+                (uint) SERVICE_START_TYPE.SERVICE_AUTO_START,
+                (uint) SERVICE_ERROR_CONTROL.SERVICE_ERROR_NORMAL,
+                path,
+                "",
+                IntPtr.Zero,
+                "",
+                null,
+                null);
         }
     }
 }

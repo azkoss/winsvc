@@ -35,8 +35,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AccessMasks\GENERIC_ACCESS_MASK.cs" />
+    <Compile Include="AccessMasks\SERVICE_CONTROL.cs" />
     <Compile Include="AccessMasks\SERVICE_ERROR_CONTROL.cs" />
     <Compile Include="AccessMasks\SERVICE_START_TYPE.cs" />
+    <Compile Include="AccessMasks\SERVICE_STATE.cs" />
     <Compile Include="AccessMasks\SERVICE_TYPE.cs" />
     <Compile Include="IServiceControlManager.cs" />
     <Compile Include="NativeMethods.cs" />
@@ -45,6 +47,7 @@
     <Compile Include="Service.cs" />
     <Compile Include="ServiceControlManager.cs" />
     <Compile Include="AccessMasks\SERVICE_ACCESS_MASK.cs" />
+    <Compile Include="ServiceStatus.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
