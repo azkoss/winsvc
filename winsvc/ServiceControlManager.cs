@@ -31,6 +31,19 @@ namespace winsvc
             return new Service(serviceHandle);
         }
 
+        public IService CreateService(string serviceName, string displayName, uint desiredAccess, uint serviceType, uint startType,
+                                        uint errorControl, string binaryPathName, string loadOrderGroup, IntPtr tagId, string dependencies,
+                                        string serviceStartName, string password)
+        {
+            var serviceHandle = NativeMethods.CreateService(handle, serviceName, displayName, desiredAccess, serviceType, startType, errorControl, binaryPathName, loadOrderGroup, tagId, dependencies, serviceStartName, password);
+            if (serviceHandle == IntPtr.Zero)
+            {
+                throw new Win32Exception();
+            }
+
+            return new Service(serviceHandle);
+        }
+
         protected override bool ReleaseHandle()
         {
             return NativeMethods.CloseServiceHandle(handle);

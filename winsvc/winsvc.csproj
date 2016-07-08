@@ -35,6 +35,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AccessMasks\GENERIC_ACCESS_MASK.cs" />
+    <Compile Include="AccessMasks\SERVICE_ERROR_CONTROL.cs" />
+    <Compile Include="AccessMasks\SERVICE_START_TYPE.cs" />
+    <Compile Include="AccessMasks\SERVICE_TYPE.cs" />
     <Compile Include="IServiceControlManager.cs" />
     <Compile Include="NativeMethods.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
