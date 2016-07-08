@@ -1,4 +1,5 @@
-﻿using System.ServiceProcess;
+﻿using System.Collections.Specialized;
+using System.ServiceProcess;
 using System.Threading;
 
 namespace dummy_service
@@ -7,6 +8,8 @@ namespace dummy_service
     {
         private static readonly AutoResetEvent Event = new AutoResetEvent(false);
 
+        public static string Name = "Dummy Service";
+
         private readonly Thread _thread = new Thread(() =>
         {
             Event.WaitOne();
@@ -14,7 +17,7 @@ namespace dummy_service
 
         public DummyService()
         {
-            ServiceName = "Dummy Service";
+            ServiceName = Name;
             CanShutdown = true;
             CanPauseAndContinue = false;
             CanStop = true;

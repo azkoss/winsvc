@@ -2,7 +2,7 @@
 
 namespace dummy_service
 {
-    public class Program
+    internal static class Program
     {
         private static void Main()
         {

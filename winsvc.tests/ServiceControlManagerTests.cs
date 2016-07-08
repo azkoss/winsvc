@@ -42,13 +42,11 @@ namespace winsvc.tests
         [Test]
         public void CreateService()
         {
-            var path = typeof(Program).Assembly.Location;
-
-            var dummyService = new DummyService();
+            var path = typeof(DummyService).Assembly.Location;
 
             using (var scm = ServiceControlManager.OpenServiceControlManager(null, (UInt32)SCM_ACCESS_MASK.SC_MANAGER_CREATE_SERVICE))
-            using (var service = scm.CreateService(dummyService.ServiceName,
-                                                   dummyService.ServiceName,
+            using (var service = scm.CreateService(DummyService.Name,
+                                                   DummyService.Name,
                                                    (uint) SERVICE_ACCESS_MASK.SERVICE_ALL_ACCESS,
                                                    (uint) SERVICE_TYPE.SERVICE_WIN32_OWN_PROCESS,
                                                    (uint) SERVICE_START_TYPE.SERVICE_AUTO_START,
