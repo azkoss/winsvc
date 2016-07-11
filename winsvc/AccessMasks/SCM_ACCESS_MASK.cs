@@ -1,6 +1,7 @@
-﻿// ReSharper disable InconsistentNaming
+﻿using System;
 
-using System;
+// ReSharper disable UnusedMember.Global
+// ReSharper disable InconsistentNaming
 
 namespace winsvc.AccessMasks
 {

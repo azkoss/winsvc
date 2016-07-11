@@ -52,6 +52,7 @@ namespace winsvc
 
         public IEnumerable<ENUM_SERVICE_STATUS> EnumServicesStatus()
         {
+            // ReSharper disable once InconsistentNaming
             const int ERROR_MORE_DATA = 234;
 
             int needed = 0;

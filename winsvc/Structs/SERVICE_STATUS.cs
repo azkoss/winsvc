@@ -1,6 +1,7 @@
 ﻿using System.Runtime.InteropServices;
 using winsvc.AccessMasks;
 
+// ReSharper disable InconsistentNaming
 // ReSharper disable MemberCanBePrivate.Global
 // ReSharper disable FieldCanBeMadeReadOnly.Global
 

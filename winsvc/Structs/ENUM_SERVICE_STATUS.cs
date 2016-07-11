@@ -1,6 +1,8 @@
 using System.Runtime.InteropServices;
+
 // ReSharper disable InconsistentNaming
-// ReSharper disable FieldCanBeMadeReadOnly.Local
+// ReSharper disable FieldCanBeMadeReadOnly.Global
+// ReSharper disable MemberCanBePrivate.Global
 
 namespace winsvc.Structs
 {
