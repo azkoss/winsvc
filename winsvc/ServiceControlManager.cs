@@ -1,6 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Runtime.InteropServices;
 using Microsoft.Win32.SafeHandles;
+using winsvc.AccessMasks;
+using winsvc.Structs;
 
 namespace winsvc
 {
@@ -31,17 +35,56 @@ namespace winsvc
             return new Service(serviceHandle);
         }
 
-        public IService CreateService(string serviceName, string displayName, uint desiredAccess, uint serviceType, uint startType,
-                                        uint errorControl, string binaryPathName, string loadOrderGroup, IntPtr tagId, string dependencies,
-                                        string serviceStartName, string password)
+        public IService CreateService(string serviceName, string displayName, uint desiredAccess, uint serviceType,
+            uint startType,
+            uint errorControl, string binaryPathName, string loadOrderGroup, IntPtr tagId, string dependencies,
+            string serviceStartName, string password)
         {
-            var serviceHandle = NativeMethods.CreateService(handle, serviceName, displayName, desiredAccess, serviceType, startType, errorControl, binaryPathName, loadOrderGroup, tagId, dependencies, serviceStartName, password);
+            var serviceHandle = NativeMethods.CreateService(handle, serviceName, displayName, desiredAccess, serviceType,
+                startType, errorControl, binaryPathName, loadOrderGroup, tagId, dependencies, serviceStartName, password);
             if (serviceHandle == IntPtr.Zero)
             {
                 throw new Win32Exception();
             }
 
             return new Service(serviceHandle);
+        }
+
+        public IEnumerable<ENUM_SERVICE_STATUS> EnumServicesStatus()
+        {
+            const int ERROR_MORE_DATA = 234;
+
+            int needed = 0;
+            int servicesReturned = 0;
+            uint resumeHandle = 0;
+
+            if (NativeMethods.EnumServicesStatus(handle, SERVICE_TYPE.SERVICE_WIN32, SERVICE_STATE_ENUM.SERVICE_STATE_ALL, IntPtr.Zero, 0, ref needed, ref servicesReturned, ref resumeHandle))
+            {
+                throw new ApplicationException("Unexpected success enumerating services with zero buffer");
+            }
+
+            if (Marshal.GetLastWin32Error() != ERROR_MORE_DATA) // We expect to get an insufficent buffer error
+            {
+                throw new Win32Exception();
+            }
+
+            IntPtr bufferPtr = Marshal.AllocHGlobal(needed);
+            var ptr = bufferPtr;
+            try
+            {
+                if (NativeMethods.EnumServicesStatus(handle, SERVICE_TYPE.SERVICE_WIN32, SERVICE_STATE_ENUM.SERVICE_STATE_ALL, bufferPtr, needed, ref needed, ref servicesReturned, ref resumeHandle))
+                {
+                    for (int i = 0; i < servicesReturned; i++)
+                    {
+                        yield return Marshal.PtrToStructure<ENUM_SERVICE_STATUS>(ptr);
+                        ptr += Marshal.SizeOf<ENUM_SERVICE_STATUS>();
+                    }
+                }
+            }
+            finally
+            {
+                Marshal.FreeHGlobal(bufferPtr);
+            }
         }
 
         protected override bool ReleaseHandle()

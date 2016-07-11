@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using Microsoft.Win32.SafeHandles;
 using winsvc.AccessMasks;
+using winsvc.Structs;
 
 namespace winsvc
 {
@@ -9,7 +10,7 @@ namespace winsvc
     {
         void Delete();
         void Start(string[] serviceArgVectors);
-        void Control(SERVICE_CONTROL control, ref ServiceStatus status);
+        void Control(SERVICE_CONTROL control, ref SERVICE_STATUS status);
     }
 
     internal sealed class Service : SafeHandleZeroOrMinusOneIsInvalid, IService
@@ -40,7 +41,7 @@ namespace winsvc
             }
         }
 
-        public void Control(SERVICE_CONTROL control, ref ServiceStatus status)
+        public void Control(SERVICE_CONTROL control, ref SERVICE_STATUS status)
         {
             if (!NativeMethods.ControlService(handle, control, ref status))
             {

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using winsvc.Structs;
 
 namespace winsvc
 {
@@ -17,5 +19,7 @@ namespace winsvc
                                 string dependencies,
                                 string serviceStartName,
                                 string password);
+
+        IEnumerable<ENUM_SERVICE_STATUS> EnumServicesStatus();
     }
 }

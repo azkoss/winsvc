@@ -1,14 +1,14 @@
 ﻿using System.Runtime.InteropServices;
 using winsvc.AccessMasks;
+
 // ReSharper disable MemberCanBePrivate.Global
 // ReSharper disable FieldCanBeMadeReadOnly.Global
 
-namespace winsvc
+namespace winsvc.Structs
 {
-    [StructLayout(LayoutKind.Sequential, Pack = 1)]
-    public struct ServiceStatus
+    [StructLayout(LayoutKind.Sequential, Pack = 0, CharSet = CharSet.Unicode)]
+    public struct SERVICE_STATUS
     {
-        public static readonly int SizeOf = Marshal.SizeOf(typeof(ServiceStatus));
         public SERVICE_TYPE dwServiceType;
         public SERVICE_STATE dwCurrentState;
         public uint dwControlsAccepted;
