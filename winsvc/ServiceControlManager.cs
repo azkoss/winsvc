@@ -63,7 +63,8 @@ namespace winsvc
                 throw new ApplicationException("Unexpected success enumerating services with zero buffer");
             }
 
-            if (Marshal.GetLastWin32Error() != ERROR_MORE_DATA) // We expect to get an insufficent buffer error
+            // We expect an ERROR_MORE_DATA error as the buffer size passed in was zero, otherwise something strage is going on
+            if (Marshal.GetLastWin32Error() != ERROR_MORE_DATA) 
             {
                 throw new Win32Exception();
             }
