@@ -34,6 +34,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IService.cs" />
     <Compile Include="Structs\ENUM_SERVICE_STATUS.cs" />
     <Compile Include="AccessMasks\GENERIC_ACCESS_MASK.cs" />
     <Compile Include="AccessMasks\SERVICE_CONTROL.cs" />
