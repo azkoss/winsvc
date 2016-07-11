@@ -41,6 +41,7 @@
   <ItemGroup>
     <Compile Include="ServiceControlManagerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ServiceTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

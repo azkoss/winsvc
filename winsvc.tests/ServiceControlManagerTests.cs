@@ -1,27 +1,14 @@
 ﻿using System;
 using System.Linq;
-using System.Threading;
 using dummy_service;
 using NUnit.Framework;
 using winsvc.AccessMasks;
-using winsvc.Structs;
 
 namespace winsvc.tests
 {
     [TestFixture]
     public class ServiceControlManagerTests
     {
-        //[OneTimeTearDown]
-        //public void OneTimeTearDown()
-        //{
-        //    using (var scm = ServiceControlManager.OpenServiceControlManager(null, (UInt32)SCM_ACCESS_MASK.SC_MANAGER_ALL_ACCESS))
-        //    using (var service = scm.OpenService("Dummy Service", (UInt32)SERVICE_ACCESS_MASK.SERVICE_ALL_ACCESS))
-        //    {
-        //        service.Delete();
-        //    }
-
-        //}
-
         [Test]
         public void OpenControlServiceManager()
         {
@@ -54,33 +41,6 @@ namespace winsvc.tests
         }
 
         [Test]
-        public void DeleteService()
-        {
-            using (var scm = ServiceControlManager.OpenServiceControlManager(null, (UInt32)SCM_ACCESS_MASK.SC_MANAGER_CREATE_SERVICE))
-            using (var service = CreateDummyService(scm))
-            {
-                service.Delete();
-            }
-        }
-
-        [Test]
-        public void StartService()
-        {
-            using (var scm = ServiceControlManager.OpenServiceControlManager(null, (UInt32)SCM_ACCESS_MASK.SC_MANAGER_CREATE_SERVICE))
-            using (var service = CreateDummyService(scm))
-            {
-                service.Start(new string[] {});
-                
-                // TODO Wait until started
-                Thread.Sleep(1000);
-
-                SERVICE_STATUS status = new SERVICE_STATUS();
-                service.Control(SERVICE_CONTROL.SERVICE_CONTROL_STOP, ref status);
-                service.Delete();
-            }
-        }
-
-        [Test]
         public void EnumServicesStatus()
         {
             using (var scm = ServiceControlManager.OpenServiceControlManager(null, (UInt32) SCM_ACCESS_MASK.SC_MANAGER_ENUMERATE_SERVICE))
@@ -90,7 +50,7 @@ namespace winsvc.tests
             }
         }
 
-        private static IService CreateDummyService(IServiceControlManager scm)
+        public static IService CreateDummyService(IServiceControlManager scm)
         {
             var path = typeof(DummyService).Assembly.Location;
 
