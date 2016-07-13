@@ -5,7 +5,7 @@
 namespace winsvc.AccessMasks
 {
     [Flags]
-    public enum SERVICE_ACCESS_MASK : uint
+    public enum SERVICE_ACCESS : uint
     {
         STANDARD_RIGHTS_REQUIRED = 0xF0000,
         SERVICE_QUERY_CONFIG = 0x00001,

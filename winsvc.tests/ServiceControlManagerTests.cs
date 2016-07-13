@@ -34,8 +34,8 @@ namespace winsvc.tests
         public void OpenService()
         {
             // Again just checking for a lack of exceptions at this stage
-            using (var scm = ServiceControlManager.OpenServiceControlManager(null, (UInt32) SCM_ACCESS_MASK.SC_MANAGER_CONNECT))
-            using (scm.OpenService("Spooler", (UInt32) SERVICE_ACCESS_MASK.SERVICE_QUERY_STATUS))
+            using (var scm = ServiceControlManager.OpenServiceControlManager(null, (UInt32) SCM_ACCESS.SC_MANAGER_CONNECT))
+            using (scm.OpenService("Spooler", (UInt32) SERVICE_ACCESS.SERVICE_QUERY_STATUS))
             {
                 // Service is cleaned up in TearDown
             }
@@ -45,7 +45,7 @@ namespace winsvc.tests
         public void CreateService()
         {
 
-            using (var scm = ServiceControlManager.OpenServiceControlManager(null, (UInt32)SCM_ACCESS_MASK.SC_MANAGER_CREATE_SERVICE))
+            using (var scm = ServiceControlManager.OpenServiceControlManager(null, (UInt32)SCM_ACCESS.SC_MANAGER_CREATE_SERVICE))
             using (CreateDummyService(scm))
             {
                 // Service is cleaned up in TearDown
@@ -55,7 +55,7 @@ namespace winsvc.tests
         [Test]
         public void EnumServicesStatus()
         {
-            using (var scm = ServiceControlManager.OpenServiceControlManager(null, (UInt32) SCM_ACCESS_MASK.SC_MANAGER_ENUMERATE_SERVICE))
+            using (var scm = ServiceControlManager.OpenServiceControlManager(null, (UInt32) SCM_ACCESS.SC_MANAGER_ENUMERATE_SERVICE))
             {
                 var services = scm.EnumServicesStatus();
                 Assert.That(services.Count(s => s.ServiceName == "Spooler"), Is.EqualTo(1));
@@ -68,7 +68,7 @@ namespace winsvc.tests
 
             return scm.CreateService(DummyService.Name, 
                 DummyService.Name,
-                (uint) SERVICE_ACCESS_MASK.SERVICE_ALL_ACCESS,
+                (uint) SERVICE_ACCESS.SERVICE_ALL_ACCESS,
                 (uint) SERVICE_TYPE.SERVICE_WIN32_OWN_PROCESS,
                 (uint) SERVICE_START_TYPE.SERVICE_AUTO_START,
                 (uint) SERVICE_ERROR_CONTROL.SERVICE_ERROR_NORMAL,

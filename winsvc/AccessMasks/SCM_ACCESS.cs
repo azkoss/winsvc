@@ -6,7 +6,7 @@
 namespace winsvc.AccessMasks
 {
     [Flags]
-    public enum SCM_ACCESS_MASK : uint
+    public enum SCM_ACCESS : uint
     {
         SC_MANAGER_CONNECT            = 0x00000001,
         SC_MANAGER_CREATE_SERVICE     = 0x00000002,

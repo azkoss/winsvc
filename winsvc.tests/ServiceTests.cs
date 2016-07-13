@@ -25,7 +25,7 @@ namespace winsvc.tests
         [Test]
         public void DeleteService()
         {
-            using (var scm = ServiceControlManager.OpenServiceControlManager(null, (UInt32)SCM_ACCESS_MASK.SC_MANAGER_CREATE_SERVICE))
+            using (var scm = ServiceControlManager.OpenServiceControlManager(null, (UInt32)SCM_ACCESS.SC_MANAGER_CREATE_SERVICE))
             using (var service = ServiceControlManagerTests.CreateDummyService(scm))
             {
                 service.Delete();
@@ -35,7 +35,7 @@ namespace winsvc.tests
         [Test]
         public void StartService()
         {
-            using (var scm = ServiceControlManager.OpenServiceControlManager(null, (UInt32)SCM_ACCESS_MASK.SC_MANAGER_CREATE_SERVICE))
+            using (var scm = ServiceControlManager.OpenServiceControlManager(null, (UInt32)SCM_ACCESS.SC_MANAGER_CREATE_SERVICE))
             using (var service = ServiceControlManagerTests.CreateDummyService(scm))
             {
                 service.Start(new string[] {});
@@ -51,7 +51,7 @@ namespace winsvc.tests
         [Test]
         public void QueryServiceConfig()
         {
-            using (var scm = ServiceControlManager.OpenServiceControlManager(null, (UInt32)SCM_ACCESS_MASK.SC_MANAGER_CREATE_SERVICE))
+            using (var scm = ServiceControlManager.OpenServiceControlManager(null, (UInt32)SCM_ACCESS.SC_MANAGER_CREATE_SERVICE))
             using (var service = ServiceControlManagerTests.CreateDummyService(scm))
             {
                 var config = service.QueryServiceConfig();
