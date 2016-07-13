@@ -10,6 +10,18 @@ namespace winsvc.tests
     [TestFixture]
     public class ServiceTests
     {
+        [SetUp]
+        public void Setup()
+        {
+            CleanUp.DeleteDummyServiceIfItExists();
+        }
+
+        [TearDown]
+        public void TearDown()
+        {
+            CleanUp.DeleteDummyServiceIfItExists();
+        }
+
         [Test]
         public void DeleteService()
         {
@@ -33,7 +45,6 @@ namespace winsvc.tests
 
                 SERVICE_STATUS status = new SERVICE_STATUS();
                 service.Control(SERVICE_CONTROL.SERVICE_CONTROL_STOP, ref status);
-                service.Delete();
             }
         }
 
@@ -43,16 +54,11 @@ namespace winsvc.tests
             using (var scm = ServiceControlManager.OpenServiceControlManager(null, (UInt32)SCM_ACCESS_MASK.SC_MANAGER_CREATE_SERVICE))
             using (var service = ServiceControlManagerTests.CreateDummyService(scm))
             {
-                try
-                {
-                    var config = service.QueryServiceConfig();
+                var config = service.QueryServiceConfig();
 
-                    Assert.That(config.DisplayName, Is.EqualTo(DummyService.Name));
-                }
-                finally
-                {
-                    service.Delete();
-                }
+                Assert.That(config.DisplayName, Is.EqualTo(DummyService.Name));
+
+                // Service is cleaned up in TearDown
             }
         }
     }

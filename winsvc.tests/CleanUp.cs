@@ -1,27 +1,13 @@
 using System;
 using System.Linq;
 using dummy_service;
-using NUnit.Framework;
 using winsvc.AccessMasks;
 
 namespace winsvc.tests
 {
-    [SetUpFixture]
-    public class GlobalSetupFixture
+    public static class CleanUp
     {
-        [OneTimeSetUp]
-        public void Setup()
-        {
-            DeleteDummyServiceIfItExists();
-        }
-
-        [OneTimeTearDown]
-        public void TearDown()
-        {
-            DeleteDummyServiceIfItExists();
-        }
-
-        private void DeleteDummyServiceIfItExists()
+        public static void DeleteDummyServiceIfItExists()
         {
             using (var scm = ServiceControlManager.OpenServiceControlManager(null, (UInt32)SCM_ACCESS_MASK.SC_MANAGER_ENUMERATE_SERVICE))
             {

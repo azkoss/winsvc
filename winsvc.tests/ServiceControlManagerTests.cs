@@ -9,6 +9,18 @@ namespace winsvc.tests
     [TestFixture]
     public class ServiceControlManagerTests
     {
+        [SetUp]
+        public void Setup()
+        {
+            CleanUp.DeleteDummyServiceIfItExists();
+        }
+
+        [TearDown]
+        public void TearDown()
+        {
+            CleanUp.DeleteDummyServiceIfItExists();
+        }
+
         [Test]
         public void OpenControlServiceManager()
         {
@@ -25,7 +37,7 @@ namespace winsvc.tests
             using (var scm = ServiceControlManager.OpenServiceControlManager(null, (UInt32) SCM_ACCESS_MASK.SC_MANAGER_CONNECT))
             using (scm.OpenService("Spooler", (UInt32) SERVICE_ACCESS_MASK.SERVICE_QUERY_STATUS))
             {
-
+                // Service is cleaned up in TearDown
             }
         }
 
@@ -34,9 +46,9 @@ namespace winsvc.tests
         {
 
             using (var scm = ServiceControlManager.OpenServiceControlManager(null, (UInt32)SCM_ACCESS_MASK.SC_MANAGER_CREATE_SERVICE))
-            using (var service = CreateDummyService(scm))
+            using (CreateDummyService(scm))
             {
-                service.Delete();
+                // Service is cleaned up in TearDown
             }
         }
 
