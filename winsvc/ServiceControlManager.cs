@@ -74,13 +74,17 @@ namespace winsvc
             var ptr = bufferPtr;
             try
             {
-                if (NativeMethods.EnumServicesStatus(handle, SERVICE_TYPE.SERVICE_WIN32, SERVICE_STATE_ENUM.SERVICE_STATE_ALL, bufferPtr, needed, ref needed, ref servicesReturned, ref resumeHandle))
+                if (!NativeMethods.EnumServicesStatus(handle, SERVICE_TYPE.SERVICE_WIN32,
+                    SERVICE_STATE_ENUM.SERVICE_STATE_ALL, bufferPtr, needed, ref needed, ref servicesReturned,
+                    ref resumeHandle))
                 {
-                    for (int i = 0; i < servicesReturned; i++)
-                    {
-                        yield return Marshal.PtrToStructure<ENUM_SERVICE_STATUS>(ptr);
-                        ptr += Marshal.SizeOf<ENUM_SERVICE_STATUS>();
-                    }
+                    throw new Win32Exception();
+                }
+
+                for (int i = 0; i < servicesReturned; i++)
+                {
+                    yield return Marshal.PtrToStructure<ENUM_SERVICE_STATUS>(ptr);
+                    ptr += Marshal.SizeOf<ENUM_SERVICE_STATUS>();
                 }
             }
             finally
