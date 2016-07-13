@@ -9,5 +9,6 @@ namespace winsvc
         void Delete();
         void Start(string[] serviceArgVectors);
         void Control(SERVICE_CONTROL control, ref SERVICE_STATUS status);
+        QUERY_SERVICE_CONFIG QueryServiceConfig();
     }
 }
