@@ -39,12 +39,9 @@ namespace winsvc.tests
             using (var service = ServiceControlManagerTests.CreateDummyService(scm))
             {
                 service.Start(new string[] {});
-                
-                // TODO Wait until started
-                Thread.Sleep(1000);
+                WaitForServiceToStart(service);
 
-                SERVICE_STATUS status = new SERVICE_STATUS();
-                service.Control(SERVICE_CONTROL.SERVICE_CONTROL_STOP, ref status);
+                StopServiceAndWait(service);
             }
         }
 
@@ -62,15 +59,24 @@ namespace winsvc.tests
 
                 Assert.That(service.QueryServiceStatus().dwCurrentState, Is.EqualTo(SERVICE_STATE.SERVICE_RUNNING));
 
-                WaitForServiceToStop(service);
+                StopServiceAndWait(service);
             }
+        }
+
+        private static void StopServiceAndWait(IService service)
+        {
+            StopService(service);
+            WaitForServiceToStop(service);
+        }
+
+        private static void StopService(IService service)
+        {
+            var status = new SERVICE_STATUS();
+            service.Control(SERVICE_CONTROL.SERVICE_CONTROL_STOP, ref status);
         }
 
         private static void WaitForServiceToStop(IService service)
         {
-            var status = new SERVICE_STATUS();
-            service.Control(SERVICE_CONTROL.SERVICE_CONTROL_STOP, ref status);
-
             while (service.QueryServiceStatus().dwCurrentState != SERVICE_STATE.SERVICE_STOPPED)
             {
                 Thread.Sleep(10);
