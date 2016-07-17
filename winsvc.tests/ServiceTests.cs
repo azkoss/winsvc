@@ -49,6 +49,43 @@ namespace winsvc.tests
         }
 
         [Test]
+        public void QueryServiceStatus()
+        {
+            using (var scm = ServiceControlManager.OpenServiceControlManager(null, (UInt32) SCM_ACCESS.SC_MANAGER_CREATE_SERVICE))
+            using (var service = ServiceControlManagerTests.CreateDummyService(scm))
+            {
+                Assert.That(service.QueryServiceStatus().dwCurrentState, Is.EqualTo(SERVICE_STATE.SERVICE_STOPPED));
+
+                service.Start(new string[]{});
+
+                WaitForServiceToStart(service);
+
+                Assert.That(service.QueryServiceStatus().dwCurrentState, Is.EqualTo(SERVICE_STATE.SERVICE_RUNNING));
+
+                WaitForServiceToStop(service);
+            }
+        }
+
+        private static void WaitForServiceToStop(IService service)
+        {
+            var status = new SERVICE_STATUS();
+            service.Control(SERVICE_CONTROL.SERVICE_CONTROL_STOP, ref status);
+
+            while (service.QueryServiceStatus().dwCurrentState != SERVICE_STATE.SERVICE_STOPPED)
+            {
+                Thread.Sleep(10);
+            }
+        }
+
+        private static void WaitForServiceToStart(IService service)
+        {
+            while (service.QueryServiceStatus().dwCurrentState != SERVICE_STATE.SERVICE_RUNNING)
+            {
+                Thread.Sleep(10);
+            }
+        }
+
+        [Test]
         public void QueryServiceConfig()
         {
             using (var scm = ServiceControlManager.OpenServiceControlManager(null, (UInt32)SCM_ACCESS.SC_MANAGER_CREATE_SERVICE))

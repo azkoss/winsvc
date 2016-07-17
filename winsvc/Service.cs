@@ -74,5 +74,16 @@ namespace winsvc
                 Marshal.FreeHGlobal(bufferPtr);
             }
         }
+
+        public SERVICE_STATUS QueryServiceStatus()
+        {
+            var status = new SERVICE_STATUS();
+            if (!NativeMethods.QueryServiceStatus(handle, ref status))
+            {
+                throw new Win32Exception();
+            }
+
+            return status;
+        }
     }
 }
