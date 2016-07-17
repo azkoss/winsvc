@@ -2,4 +2,6 @@
 
 A thin wrapper around the Windows service functions.
 
-Beta test at the moment
+Extracted from the next version of [Print Distributor](http://www.printdistributor.com). 
+
+No official release yet, it's pending some further development and testing.
