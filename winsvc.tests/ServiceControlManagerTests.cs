@@ -11,6 +11,9 @@ namespace winsvc.tests
     [TestFixture]
     public class ServiceControlManagerTests
     {
+        // ReSharper disable once InconsistentNaming
+        const int ERROR_ACCESS_DENIED = 5;
+
         [SetUp]
         public void Setup()
         {
@@ -85,9 +88,6 @@ namespace winsvc.tests
         [Test]
         public void CreateServiceFailure()
         {
-            // ReSharper disable once InconsistentNaming
-            const int ERROR_ACCESS_DENIED = 5;
-
             // Create should CreateServiceFailure() WithOperator insufficient permissions
             var scm = ServiceControlManager.OpenServiceControlManager(null, 0);
             Assert.That(() => CreateDummyService(scm), Throws.TypeOf<Win32Exception>().With.Property("NativeErrorCode").EqualTo(ERROR_ACCESS_DENIED));
@@ -100,6 +100,18 @@ namespace winsvc.tests
             {
                 var services = scm.EnumServicesStatus();
                 Assert.That(services.Count(s => s.ServiceName == "Spooler"), Is.EqualTo(1));
+            }
+        }
+
+        [Test]
+        public void EnumServicesStatusFailure()
+        {
+            using (var scm = ServiceControlManager.OpenServiceControlManager(null, 0))
+            {
+                // ReSharper disable once AccessToDisposedClosure
+                Assert.That(() => scm.EnumServicesStatus().ToList(), 
+                    Throws.TypeOf<Win32Exception>()
+                          .With.Property("NativeErrorCode").EqualTo(ERROR_ACCESS_DENIED));
             }
         }
 
