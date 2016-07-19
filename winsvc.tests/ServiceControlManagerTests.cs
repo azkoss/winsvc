@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Linq;
 using dummy_service;
 using NUnit.Framework;
+using NUnit.Framework.Constraints;
 using winsvc.AccessMasks;
 
 namespace winsvc.tests
@@ -74,12 +75,22 @@ namespace winsvc.tests
         [Test]
         public void CreateService()
         {
-
             using (var scm = ServiceControlManager.OpenServiceControlManager(null, (UInt32)SCM_ACCESS.SC_MANAGER_CREATE_SERVICE))
             using (CreateDummyService(scm))
             {
                 // Service is cleaned up in TearDown
             }
+        }
+
+        [Test]
+        public void CreateServiceFailure()
+        {
+            // ReSharper disable once InconsistentNaming
+            const int ERROR_ACCESS_DENIED = 5;
+
+            // Create should CreateServiceFailure() WithOperator insufficient permissions
+            var scm = ServiceControlManager.OpenServiceControlManager(null, 0);
+            Assert.That(() => CreateDummyService(scm), Throws.TypeOf<Win32Exception>().With.Property("NativeErrorCode").EqualTo(ERROR_ACCESS_DENIED));
         }
 
         [Test]
