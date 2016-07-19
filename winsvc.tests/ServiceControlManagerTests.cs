@@ -32,6 +32,18 @@ namespace winsvc.tests
         }
 
         [Test]
+        public void OpenControlServiceManagerFailure()
+        {
+            // ReSharper disable once InconsistentNaming
+            const int RPC_S_SERVER_UNAVAILABLE = 1722;
+
+            // Opening the service control manager on a server with an incorrect name (with spaces) throws quickly
+            Assert.That(() => ServiceControlManager.OpenServiceControlManager("aa aa", 0), 
+                Throws.TypeOf<Win32Exception>()
+                .With.Property("NativeErrorCode").EqualTo(RPC_S_SERVER_UNAVAILABLE ));
+        }
+
+        [Test]
         public void OpenService()
         {
             // Again just checking for a lack of exceptions at this stage
