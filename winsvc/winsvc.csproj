@@ -78,7 +78,7 @@
     <Compile Include="AccessMasks\SERVICE_ERROR_CONTROL.cs" />
     <Compile Include="AccessMasks\SERVICE_START_TYPE.cs" />
     <Compile Include="AccessMasks\SERVICE_STATE.cs" />
-    <Compile Include="AccessMasks\SERVICE_STATE_ENUM.cs" />
+    <Compile Include="Flags\SERVICE_STATE_FLAGS.cs" />
     <Compile Include="AccessMasks\SERVICE_TYPE.cs" />
     <Compile Include="IServiceControlManager.cs" />
     <Compile Include="NativeMethods.cs" />

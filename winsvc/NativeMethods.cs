@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 using winsvc.AccessMasks;
+using winsvc.Flags;
 using winsvc.Structs;
 
 namespace winsvc
@@ -52,7 +53,7 @@ namespace winsvc
         internal static extern bool EnumServicesStatus(
             IntPtr serviceControlObject, 
             SERVICE_TYPE serviceType, 
-            SERVICE_STATE_ENUM serviceState, 
+            SERVICE_STATE_FLAGS serviceState, 
             IntPtr bufferPtr, 
             Int32 bufferSize, 
             ref Int32 bufferNeeded, 

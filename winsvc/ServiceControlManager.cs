@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Runtime.InteropServices;
 using Microsoft.Win32.SafeHandles;
 using winsvc.AccessMasks;
+using winsvc.Flags;
 using winsvc.Structs;
 
 namespace winsvc
@@ -59,7 +60,7 @@ namespace winsvc
             int servicesReturned = 0;
             uint resumeHandle = 0;
 
-            if (NativeMethods.EnumServicesStatus(handle, SERVICE_TYPE.SERVICE_WIN32, SERVICE_STATE_ENUM.SERVICE_STATE_ALL, IntPtr.Zero, 0, ref needed, ref servicesReturned, ref resumeHandle))
+            if (NativeMethods.EnumServicesStatus(handle, SERVICE_TYPE.SERVICE_WIN32, SERVICE_STATE_FLAGS.SERVICE_STATE_ALL, IntPtr.Zero, 0, ref needed, ref servicesReturned, ref resumeHandle))
             {
                 throw new ApplicationException("Unexpected success enumerating services with zero buffer");
             }
@@ -75,7 +76,7 @@ namespace winsvc
             try
             {
                 if (!NativeMethods.EnumServicesStatus(handle, SERVICE_TYPE.SERVICE_WIN32,
-                    SERVICE_STATE_ENUM.SERVICE_STATE_ALL, bufferPtr, needed, ref needed, ref servicesReturned,
+                    SERVICE_STATE_FLAGS.SERVICE_STATE_ALL, bufferPtr, needed, ref needed, ref servicesReturned,
                     ref resumeHandle))
                 {
                     throw new Win32Exception();

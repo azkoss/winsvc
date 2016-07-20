@@ -3,10 +3,10 @@ using System;
 // ReSharper disable InconsistentNaming
 // ReSharper disable UnusedMember.Global
 
-namespace winsvc.AccessMasks
+namespace winsvc.Flags
 {
     [Flags]
-    public enum SERVICE_STATE_ENUM : uint
+    public enum SERVICE_STATE_FLAGS : uint
     {
         SERVICE_ACTIVE = 0x00000001,
         SERVICE_INACTIVE = 0x00000002,
