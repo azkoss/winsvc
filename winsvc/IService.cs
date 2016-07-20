@@ -1,5 +1,5 @@
 using System;
-using winsvc.AccessMasks;
+using winsvc.Enumerations;
 using winsvc.Structs;
 
 namespace winsvc

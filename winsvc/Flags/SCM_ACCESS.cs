@@ -3,7 +3,7 @@
 // ReSharper disable UnusedMember.Global
 // ReSharper disable InconsistentNaming
 
-namespace winsvc.AccessMasks
+namespace winsvc.Flags
 {
     [Flags]
     public enum SCM_ACCESS : uint

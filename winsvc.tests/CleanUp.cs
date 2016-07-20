@@ -1,7 +1,7 @@
 using System;
 using System.Linq;
 using dummy_service;
-using winsvc.AccessMasks;
+using winsvc.Flags;
 
 namespace winsvc.tests
 {

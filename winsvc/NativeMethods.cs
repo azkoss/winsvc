@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
-using winsvc.AccessMasks;
+using winsvc.Enumerations;
 using winsvc.Flags;
 using winsvc.Structs;
 

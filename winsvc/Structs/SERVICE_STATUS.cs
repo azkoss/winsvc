@@ -1,5 +1,6 @@
 ﻿using System.Runtime.InteropServices;
-using winsvc.AccessMasks;
+using winsvc.Enumerations;
+using winsvc.Flags;
 
 // ReSharper disable InconsistentNaming
 // ReSharper disable MemberCanBePrivate.Global

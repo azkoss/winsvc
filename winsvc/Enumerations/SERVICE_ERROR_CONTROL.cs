@@ -1,11 +1,8 @@
-using System;
-
 // ReSharper disable InconsistentNaming
 // ReSharper disable UnusedMember.Global
 
-namespace winsvc.AccessMasks
+namespace winsvc.Enumerations
 {
-    [Flags]
     public enum SERVICE_ERROR_CONTROL : uint
     {
         SERVICE_ERROR_IGNORE   = 0x0000,

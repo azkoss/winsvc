@@ -2,7 +2,7 @@
 
 // ReSharper disable InconsistentNaming
 
-namespace winsvc.AccessMasks
+namespace winsvc.Flags
 {
     [Flags]
     public enum SERVICE_ACCESS : uint

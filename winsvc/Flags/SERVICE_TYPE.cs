@@ -3,7 +3,7 @@ using System;
 // ReSharper disable InconsistentNaming
 // ReSharper disable UnusedMember.Global
 
-namespace winsvc.AccessMasks
+namespace winsvc.Flags
 {
     [Flags]
     public enum SERVICE_TYPE : uint

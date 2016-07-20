@@ -2,7 +2,8 @@ using System;
 using System.Threading;
 using dummy_service;
 using NUnit.Framework;
-using winsvc.AccessMasks;
+using winsvc.Enumerations;
+using winsvc.Flags;
 using winsvc.Structs;
 
 namespace winsvc.tests

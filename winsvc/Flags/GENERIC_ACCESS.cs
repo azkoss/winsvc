@@ -3,7 +3,7 @@
 // ReSharper disable InconsistentNaming
 // ReSharper disable UnusedMember.Global
 
-namespace winsvc.AccessMasks
+namespace winsvc.Flags
 {
     [Flags]
     public enum GENERIC_ACCESS : UInt32

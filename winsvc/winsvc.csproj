@@ -73,20 +73,20 @@
   <ItemGroup>
     <Compile Include="IService.cs" />
     <Compile Include="Structs\ENUM_SERVICE_STATUS.cs" />
-    <Compile Include="AccessMasks\GENERIC_ACCESS.cs" />
-    <Compile Include="AccessMasks\SERVICE_CONTROL.cs" />
-    <Compile Include="AccessMasks\SERVICE_ERROR_CONTROL.cs" />
-    <Compile Include="AccessMasks\SERVICE_START_TYPE.cs" />
-    <Compile Include="AccessMasks\SERVICE_STATE.cs" />
+    <Compile Include="Flags\GENERIC_ACCESS.cs" />
+    <Compile Include="Enumerations\SERVICE_CONTROL.cs" />
+    <Compile Include="Enumerations\SERVICE_ERROR_CONTROL.cs" />
+    <Compile Include="Enumerations\SERVICE_START_TYPE.cs" />
+    <Compile Include="Enumerations\SERVICE_STATE.cs" />
     <Compile Include="Flags\SERVICE_STATE_FLAGS.cs" />
-    <Compile Include="AccessMasks\SERVICE_TYPE.cs" />
+    <Compile Include="Flags\SERVICE_TYPE.cs" />
     <Compile Include="IServiceControlManager.cs" />
     <Compile Include="NativeMethods.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="AccessMasks\SCM_ACCESS.cs" />
+    <Compile Include="Flags\SCM_ACCESS.cs" />
     <Compile Include="Service.cs" />
     <Compile Include="ServiceControlManager.cs" />
-    <Compile Include="AccessMasks\SERVICE_ACCESS.cs" />
+    <Compile Include="Flags\SERVICE_ACCESS.cs" />
     <Compile Include="Structs\QUERY_SERVICE_CONFIG.cs" />
     <Compile Include="Structs\SERVICE_STATUS.cs" />
   </ItemGroup>

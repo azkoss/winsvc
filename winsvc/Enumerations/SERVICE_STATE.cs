@@ -1,7 +1,7 @@
 // ReSharper disable InconsistentNaming
 // ReSharper disable UnusedMember.Global
 
-namespace winsvc.AccessMasks
+namespace winsvc.Enumerations
 {
     public enum SERVICE_STATE : uint
     {

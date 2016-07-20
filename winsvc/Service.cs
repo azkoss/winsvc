@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Runtime.InteropServices;
 using Microsoft.Win32.SafeHandles;
-using winsvc.AccessMasks;
+using winsvc.Enumerations;
 using winsvc.Structs;
 
 namespace winsvc
