@@ -83,8 +83,8 @@ namespace winsvc
 
                 for (int i = 0; i < servicesReturned; i++)
                 {
-                    yield return Marshal.PtrToStructure<ENUM_SERVICE_STATUS>(ptr);
-                    ptr += Marshal.SizeOf<ENUM_SERVICE_STATUS>();
+                    yield return (ENUM_SERVICE_STATUS) Marshal.PtrToStructure(ptr, typeof(ENUM_SERVICE_STATUS));
+                    ptr += Marshal.SizeOf(typeof(ENUM_SERVICE_STATUS));
                 }
             }
             finally

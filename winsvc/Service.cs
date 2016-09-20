@@ -67,7 +67,7 @@ namespace winsvc
                     throw new Win32Exception();
                 }
 
-                return Marshal.PtrToStructure<QUERY_SERVICE_CONFIG>(bufferPtr);
+                return (QUERY_SERVICE_CONFIG) Marshal.PtrToStructure(bufferPtr, typeof(QUERY_SERVICE_CONFIG));
             }
             finally
             {
