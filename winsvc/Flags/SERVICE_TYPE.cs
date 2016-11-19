@@ -8,6 +8,7 @@ namespace winsvc.Flags
     [Flags]
     public enum SERVICE_TYPE : uint
     {
+        SERVICE_NO_CHANGE           = 0xFFFFFFFF,
         SERVICE_KERNEL_DRIVER       = 0x0001,
         SERVICE_FILE_SYSTEM_DRIVER  = 0x0002,
         SERVICE_ADAPTER             = 0x0004,

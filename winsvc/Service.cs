@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Runtime.InteropServices;
 using Microsoft.Win32.SafeHandles;
 using winsvc.Enumerations;
+using winsvc.Flags;
 using winsvc.Structs;
 
 namespace winsvc
@@ -72,6 +73,35 @@ namespace winsvc
             finally
             {
                 Marshal.FreeHGlobal(bufferPtr);
+            }
+        }
+
+        public void ChangeServiceConfig(
+            SERVICE_TYPE serviceType, 
+            SERVICE_START_TYPE startType, 
+            SERVICE_ERROR_CONTROL errorControl, 
+            string binaryPathName, 
+            string loadOrderGroup, 
+            IntPtr tagId, 
+            string dependencies, // TODO Should be IEnumerable<string>
+            string serviceStartName, 
+            string password, 
+            string displayName)
+        {
+            if (!NativeMethods.ChangeServiceConfig(
+                    handle, 
+                    (uint) serviceType, 
+                    (uint) startType, 
+                    (uint) errorControl, 
+                    binaryPathName,
+                    loadOrderGroup, 
+                    tagId, 
+                    dependencies,
+                    serviceStartName,
+                    password,
+                    displayName))
+            {
+                throw new Win32Exception();
             }
         }
 

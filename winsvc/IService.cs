@@ -1,5 +1,6 @@
 using System;
 using winsvc.Enumerations;
+using winsvc.Flags;
 using winsvc.Structs;
 
 namespace winsvc
@@ -10,6 +11,20 @@ namespace winsvc
         void Start(string[] serviceArgVectors);
         void Control(SERVICE_CONTROL control, ref SERVICE_STATUS status);
         QUERY_SERVICE_CONFIG QueryServiceConfig();
+
+        void ChangeServiceConfig(
+            SERVICE_TYPE       serviceType,
+            SERVICE_START_TYPE       startType,
+            SERVICE_ERROR_CONTROL       errorControl,
+            string     binaryPathName,
+            string     loadOrderGroup,
+            IntPtr     tagId,
+            string     dependencies,
+            string     serviceStartName,
+            string     password,
+            string     displayName
+        );
+
         SERVICE_STATUS QueryServiceStatus();
     }
 }
