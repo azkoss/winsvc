@@ -26,7 +26,7 @@ namespace winsvc.tests
         [Test]
         public void DeleteService()
         {
-            using (var scm = ServiceControlManager.OpenServiceControlManager(null, (UInt32)SCM_ACCESS.SC_MANAGER_CREATE_SERVICE))
+            using (var scm = ServiceControlManager.OpenServiceControlManager(null, SCM_ACCESS.SC_MANAGER_CREATE_SERVICE))
             using (var service = ServiceControlManagerTests.CreateDummyService(scm))
             {
                 service.Delete();
@@ -36,7 +36,7 @@ namespace winsvc.tests
         [Test]
         public void StartService()
         {
-            using (var scm = ServiceControlManager.OpenServiceControlManager(null, (UInt32)SCM_ACCESS.SC_MANAGER_CREATE_SERVICE))
+            using (var scm = ServiceControlManager.OpenServiceControlManager(null, SCM_ACCESS.SC_MANAGER_CREATE_SERVICE))
             using (var service = ServiceControlManagerTests.CreateDummyService(scm))
             {
                 service.Start(new string[] {});
@@ -49,7 +49,7 @@ namespace winsvc.tests
         [Test]
         public void QueryServiceStatus()
         {
-            using (var scm = ServiceControlManager.OpenServiceControlManager(null, (UInt32) SCM_ACCESS.SC_MANAGER_CREATE_SERVICE))
+            using (var scm = ServiceControlManager.OpenServiceControlManager(null, SCM_ACCESS.SC_MANAGER_CREATE_SERVICE))
             using (var service = ServiceControlManagerTests.CreateDummyService(scm))
             {
                 Assert.That(service.QueryServiceStatus().dwCurrentState, Is.EqualTo(SERVICE_STATE.SERVICE_STOPPED));
@@ -95,7 +95,7 @@ namespace winsvc.tests
         [Test]
         public void QueryServiceConfig()
         {
-            using (var scm = ServiceControlManager.OpenServiceControlManager(null, (UInt32)SCM_ACCESS.SC_MANAGER_CREATE_SERVICE))
+            using (var scm = ServiceControlManager.OpenServiceControlManager(null, SCM_ACCESS.SC_MANAGER_CREATE_SERVICE))
             using (var service = ServiceControlManagerTests.CreateDummyService(scm))
             {
                 var config = service.QueryServiceConfig();
@@ -109,7 +109,7 @@ namespace winsvc.tests
         [Test]
         public void ChangeServiceConfig()
         {
-            using (var scm = ServiceControlManager.OpenServiceControlManager(null, (UInt32)SCM_ACCESS.SC_MANAGER_CREATE_SERVICE))
+            using (var scm = ServiceControlManager.OpenServiceControlManager(null, SCM_ACCESS.SC_MANAGER_CREATE_SERVICE))
             using (var service = ServiceControlManagerTests.CreateDummyService(scm))
             {
                 // No changes should not throw

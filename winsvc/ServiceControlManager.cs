@@ -10,16 +10,16 @@ namespace winsvc
 {
     public sealed class ServiceControlManager : SafeHandleZeroOrMinusOneIsInvalid, IServiceControlManager
     {
-        private ServiceControlManager(string machineName, UInt32 desiredAccess) : base(true)
+        private ServiceControlManager(string machineName, SCM_ACCESS desiredAccess) : base(true)
         {
-            handle = NativeMethods.OpenSCManager(machineName, null, desiredAccess);
+            handle = NativeMethods.OpenSCManager(machineName, null, (uint) desiredAccess);
             if (handle == IntPtr.Zero)
             {
                 throw new Win32Exception();
             }
         }
 
-        public static IServiceControlManager OpenServiceControlManager(string machineName, UInt32 desiredAccess)
+        public static IServiceControlManager OpenServiceControlManager(string machineName, SCM_ACCESS desiredAccess)
         {
             return new ServiceControlManager(machineName, desiredAccess);
         }

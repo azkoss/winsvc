@@ -9,7 +9,7 @@ namespace winsvc.tests
     {
         public static void DeleteDummyServiceIfItExists()
         {
-            using (var scm = ServiceControlManager.OpenServiceControlManager(null, (UInt32)SCM_ACCESS.SC_MANAGER_ENUMERATE_SERVICE))
+            using (var scm = ServiceControlManager.OpenServiceControlManager(null, SCM_ACCESS.SC_MANAGER_ENUMERATE_SERVICE))
             {
                 var services = scm.EnumServicesStatus();
                 if (services.Any(s => s.ServiceName == DummyService.Name))

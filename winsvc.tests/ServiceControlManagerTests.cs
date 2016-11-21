@@ -52,7 +52,7 @@ namespace winsvc.tests
         public void OpenService()
         {
             // Again just checking for a lack of exceptions at this stage
-            using (var scm = ServiceControlManager.OpenServiceControlManager(null, (UInt32) SCM_ACCESS.SC_MANAGER_CONNECT))
+            using (var scm = ServiceControlManager.OpenServiceControlManager(null, SCM_ACCESS.SC_MANAGER_CONNECT))
             using (scm.OpenService("Spooler", (UInt32) SERVICE_ACCESS.SERVICE_QUERY_STATUS))
             {
                 // Service is cleaned up in TearDown
@@ -67,7 +67,7 @@ namespace winsvc.tests
             // ReSharper disable once InconsistentNaming
             const int ERROR_SERVICE_DOES_NOT_EXIST = 1060;
 
-            using (var scm = ServiceControlManager.OpenServiceControlManager(null, (UInt32) SCM_ACCESS.SC_MANAGER_CONNECT))
+            using (var scm = ServiceControlManager.OpenServiceControlManager(null, SCM_ACCESS.SC_MANAGER_CONNECT))
             {
                 // ReSharper disable once AccessToDisposedClosure
                 Assert.That(() => scm.OpenService("Non existant service name", (UInt32) SERVICE_ACCESS.SERVICE_QUERY_STATUS), 
@@ -79,7 +79,7 @@ namespace winsvc.tests
         [Test]
         public void CreateService()
         {
-            using (var scm = ServiceControlManager.OpenServiceControlManager(null, (UInt32)SCM_ACCESS.SC_MANAGER_CREATE_SERVICE))
+            using (var scm = ServiceControlManager.OpenServiceControlManager(null, SCM_ACCESS.SC_MANAGER_CREATE_SERVICE))
             using (CreateDummyService(scm))
             {
                 // Service is cleaned up in TearDown
@@ -97,7 +97,7 @@ namespace winsvc.tests
         [Test]
         public void EnumServicesStatus()
         {
-            using (var scm = ServiceControlManager.OpenServiceControlManager(null, (UInt32) SCM_ACCESS.SC_MANAGER_ENUMERATE_SERVICE))
+            using (var scm = ServiceControlManager.OpenServiceControlManager(null, SCM_ACCESS.SC_MANAGER_ENUMERATE_SERVICE))
             {
                 var services = scm.EnumServicesStatus();
                 Assert.That(services.Count(s => s.ServiceName == "Spooler"), Is.EqualTo(1));
