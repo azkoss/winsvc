@@ -26,5 +26,7 @@ namespace winsvc
         );
 
         SERVICE_STATUS QueryServiceStatus();
+
+        string Description { get; set; }
     }
 }

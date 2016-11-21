@@ -82,6 +82,22 @@ namespace winsvc
             String lpDisplayName);
 
         [DllImport("advapi32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
+        public static extern bool ChangeServiceConfig2(
+            IntPtr hService,
+            int dwInfoLevel,
+            [MarshalAs(UnmanagedType.Struct)] ref SERVICE_DESCRIPTION lpInfo
+        );
+
+        [DllImport("advapi32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
+        internal static extern bool QueryServiceConfig2(
+            IntPtr hService, 
+            UInt32 dwInfoLevel, 
+            IntPtr buffer, 
+            Int32 cbBufSize, 
+            ref Int32 pcbBytesNeeded
+        );
+
+        [DllImport("advapi32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
         public static extern bool QueryServiceStatus(IntPtr hService, ref SERVICE_STATUS dwServiceStatus);
 
     }

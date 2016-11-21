@@ -115,5 +115,63 @@ namespace winsvc
 
             return status;
         }
+
+        public string Description
+        {
+            get
+            {
+                return QueryServiceConfig2<SERVICE_DESCRIPTION>().Description;
+            }
+            set
+            {
+                var description = new SERVICE_DESCRIPTION {Description = value};
+
+                if (!NativeMethods.ChangeServiceConfig2(handle, (int) SERVICE_CONFIG.SERVICE_CONFIG_DESCRIPTION, ref description))
+                {
+                    throw new Win32Exception();
+                }
+            }
+        }
+
+        private T QueryServiceConfig2<T>()
+        {
+            var level = GetLevel<T>();
+            int needed = 0;
+
+            if (NativeMethods.QueryServiceConfig2(handle, (uint) level, IntPtr.Zero, 0, ref needed))
+            {
+                throw new ApplicationException("Unexpected success querying service config2");
+            }
+
+            if (Marshal.GetLastWin32Error() != ERROR_INSUFFICIENT_BUFFER)
+            {
+                throw new Win32Exception();
+            }
+
+            var bufferPtr = Marshal.AllocHGlobal(needed);
+            try
+            {
+                if (!NativeMethods.QueryServiceConfig2(handle, (uint) level, bufferPtr, needed, ref needed))
+                {
+                    throw new Win32Exception();
+                }
+
+                return (T)Marshal.PtrToStructure(bufferPtr, typeof(T));
+            }
+            finally
+            {
+                Marshal.FreeHGlobal(bufferPtr);
+            }
+        }
+
+        private static SERVICE_CONFIG GetLevel<T>()
+        {
+            if (typeof(T).IsAssignableFrom(typeof(SERVICE_DESCRIPTION)) )
+            {
+                return SERVICE_CONFIG.SERVICE_CONFIG_DESCRIPTION;
+            }
+
+            throw new ApplicationException($"Unrecognised type: {typeof(T)}");
+        }
     }
 }

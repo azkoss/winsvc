@@ -107,6 +107,22 @@ namespace winsvc.tests
         }
 
         [Test]
+        public void Description()
+        {
+            using (var scm = ServiceControlManager.OpenServiceControlManager(null, SCM_ACCESS.SC_MANAGER_CREATE_SERVICE))
+            {
+                using (var service = ServiceControlManagerTests.CreateDummyService(scm))
+                {
+                    service.Description = "Service Description";
+                }
+                using (var service = scm.OpenService(DummyService.Name, SERVICE_ACCESS.SERVICE_QUERY_CONFIG))
+                {
+                    Assert.That(service.Description, Is.EqualTo("Service Description"));
+                }
+            }
+        }
+
+        [Test]
         public void ChangeServiceConfig()
         {
             using (var scm = ServiceControlManager.OpenServiceControlManager(null, SCM_ACCESS.SC_MANAGER_CREATE_SERVICE))
