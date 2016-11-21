@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.InteropServices;
 using Microsoft.Win32.SafeHandles;
+using winsvc.Enumerations;
 using winsvc.Flags;
 using winsvc.Structs;
 
@@ -35,13 +36,22 @@ namespace winsvc
             return new Service(serviceHandle);
         }
 
-        public IService CreateService(string serviceName, string displayName, uint desiredAccess, uint serviceType,
-            uint startType,
-            uint errorControl, string binaryPathName, string loadOrderGroup, IntPtr tagId, string dependencies,
-            string serviceStartName, string password)
+        public IService CreateService(
+            string serviceName, 
+            string displayName, 
+            SERVICE_ACCESS desiredAccess, 
+            SERVICE_TYPE serviceType,
+            SERVICE_START_TYPE startType,
+            SERVICE_ERROR_CONTROL errorControl, 
+            string binaryPathName, 
+            string loadOrderGroup, 
+            IntPtr tagId, 
+            string dependencies,
+            string serviceStartName, 
+            string password)
         {
-            var serviceHandle = NativeMethods.CreateService(handle, serviceName, displayName, desiredAccess, serviceType,
-                startType, errorControl, binaryPathName, loadOrderGroup, tagId, dependencies, serviceStartName, password);
+            var serviceHandle = NativeMethods.CreateService(handle, serviceName, displayName, (uint) desiredAccess, (uint) serviceType,
+                (uint) startType, (uint) errorControl, binaryPathName, loadOrderGroup, tagId, dependencies, serviceStartName, password);
             if (serviceHandle == IntPtr.Zero)
             {
                 throw new Win32Exception();

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using winsvc.Enumerations;
 using winsvc.Flags;
 using winsvc.Structs;
 
@@ -10,10 +11,10 @@ namespace winsvc
         IService OpenService(string serviceName, SERVICE_ACCESS desiredAccess);
         IService CreateService(string serviceName,
                                 string displayName,
-                                UInt32 desiredAccess,
-                                UInt32 serviceType,
-                                UInt32 startType,
-                                UInt32 errorControl,
+                                SERVICE_ACCESS desiredAccess,
+                                SERVICE_TYPE serviceType,
+                                SERVICE_START_TYPE startType,
+                                SERVICE_ERROR_CONTROL errorControl,
                                 string binaryPathName,
                                 string loadOrderGroup,
                                 IntPtr tagId,
