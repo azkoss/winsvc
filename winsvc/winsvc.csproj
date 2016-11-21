@@ -73,7 +73,6 @@
   <ItemGroup>
     <Compile Include="IService.cs" />
     <Compile Include="Structs\ENUM_SERVICE_STATUS.cs" />
-    <Compile Include="Flags\GENERIC_ACCESS.cs" />
     <Compile Include="Enumerations\SERVICE_CONTROL.cs" />
     <Compile Include="Enumerations\SERVICE_ERROR_CONTROL.cs" />
     <Compile Include="Enumerations\SERVICE_START_TYPE.cs" />
