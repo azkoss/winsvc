@@ -21,7 +21,7 @@ namespace winsvc.tests
 
         private static void DeleteService(IServiceControlManager scm)
         {
-            using (var service = scm.OpenService(DummyService.Name, (uint) SERVICE_ACCESS.SERVICE_ALL_ACCESS))
+            using (var service = scm.OpenService(DummyService.Name, SERVICE_ACCESS.SERVICE_ALL_ACCESS))
             {
                 service.Delete();
             }

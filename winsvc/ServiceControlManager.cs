@@ -24,9 +24,9 @@ namespace winsvc
             return new ServiceControlManager(machineName, desiredAccess);
         }
 
-        public IService OpenService(string serviceName, UInt32 desiredAccess)
+        public IService OpenService(string serviceName, SERVICE_ACCESS desiredAccess)
         {
-            var serviceHandle = NativeMethods.OpenService(handle, serviceName, desiredAccess);
+            var serviceHandle = NativeMethods.OpenService(handle, serviceName, (uint) desiredAccess);
             if (serviceHandle == IntPtr.Zero)
             {
                 throw new Win32Exception();

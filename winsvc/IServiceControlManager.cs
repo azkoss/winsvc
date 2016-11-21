@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using winsvc.Flags;
 using winsvc.Structs;
 
 namespace winsvc
 {
     public interface IServiceControlManager : IDisposable
     {
-        IService OpenService(string serviceName, UInt32 desiredAccess);
+        IService OpenService(string serviceName, SERVICE_ACCESS desiredAccess);
         IService CreateService(string serviceName,
                                 string displayName,
                                 UInt32 desiredAccess,
