@@ -72,8 +72,7 @@ namespace winsvc.tests
 
         private static void StopService(IService service)
         {
-            var status = new SERVICE_STATUS();
-            service.Control(SERVICE_CONTROL.SERVICE_CONTROL_STOP, ref status);
+            service.Control(SERVICE_CONTROL.SERVICE_CONTROL_STOP);
         }
 
         private static void WaitForServiceToStop(IService service)

@@ -39,8 +39,10 @@ namespace winsvc
             }
         }
 
-        public void Control(SERVICE_CONTROL control, ref SERVICE_STATUS status)
+        public void Control(SERVICE_CONTROL control)
         {
+            var status = new SERVICE_STATUS();
+
             if (!NativeMethods.ControlService(handle, control, ref status))
             {
                 throw new Win32Exception();
