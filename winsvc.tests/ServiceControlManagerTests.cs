@@ -51,10 +51,13 @@ namespace winsvc.tests
         public void OpenService()
         {
             // Again just checking for a lack of exceptions at this stage
-            using (var scm = ServiceControlManager.OpenServiceControlManager(null, SCM_ACCESS.SC_MANAGER_CONNECT))
-            using (scm.OpenService("Spooler", SERVICE_ACCESS.SERVICE_QUERY_STATUS))
+            using (var scm = ServiceControlManager.OpenServiceControlManager(null, SCM_ACCESS.SC_MANAGER_CONNECT | SCM_ACCESS.SC_MANAGER_ENUMERATE_SERVICE))
             {
-                // Service is cleaned up in TearDown
+                var serviceName = scm.EnumServicesStatus().Select(ss => ss.ServiceName).First();
+                using (scm.OpenService(serviceName, SERVICE_ACCESS.SERVICE_QUERY_STATUS))
+                {
+                    // Service is cleaned up in TearDown
+                }
             }
         }
 
@@ -96,10 +99,11 @@ namespace winsvc.tests
         [Test]
         public void EnumServicesStatus()
         {
-            using (var scm = ServiceControlManager.OpenServiceControlManager(null, SCM_ACCESS.SC_MANAGER_ENUMERATE_SERVICE))
+            using (var scm = ServiceControlManager.OpenServiceControlManager(null, SCM_ACCESS.SC_MANAGER_CREATE_SERVICE | SCM_ACCESS.SC_MANAGER_ENUMERATE_SERVICE))
+            using (CreateDummyService(scm))
             {
                 var services = scm.EnumServicesStatus();
-                Assert.That(services.Count(s => s.ServiceName == "Spooler"), Is.EqualTo(1));
+                Assert.That(services.Count(s => s.ServiceName == DummyService.Name), Is.EqualTo(1));
             }
         }
 
