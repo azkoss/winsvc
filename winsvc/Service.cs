@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.InteropServices;
 using Microsoft.Win32.SafeHandles;
@@ -116,6 +117,46 @@ namespace winsvc
             }
 
             return status;
+        }
+
+        public IEnumerable<ENUM_SERVICE_STATUS> EnumDependentServices(SERVICE_STATES states)
+        {
+            // ReSharper disable once InconsistentNaming
+            const int ERROR_MORE_DATA = 234;
+
+            int needed = 0;
+            int servicesReturned = 0;
+
+            if (NativeMethods.EnumDependentServices(handle, states, IntPtr.Zero, 0, ref needed, ref servicesReturned))
+            {
+                yield break; // No dependent services
+            }
+
+            // We expect an ERROR_MORE_DATA error as the buffer size passed in was zero, otherwise something strage is going on
+            if (Marshal.GetLastWin32Error() != ERROR_MORE_DATA)
+            {
+                throw new Win32Exception();
+            }
+
+            IntPtr bufferPtr = Marshal.AllocHGlobal(needed);
+            var ptr = bufferPtr;
+            try
+            {
+                if (!NativeMethods.EnumDependentServices(handle, states, bufferPtr, needed, ref needed, ref servicesReturned))
+                {
+                    throw new Win32Exception();
+                }
+
+                for (int i = 0; i < servicesReturned; i++)
+                {
+                    yield return (ENUM_SERVICE_STATUS)Marshal.PtrToStructure(ptr, typeof(ENUM_SERVICE_STATUS));
+                    ptr += Marshal.SizeOf(typeof(ENUM_SERVICE_STATUS));
+                }
+            }
+            finally
+            {
+                Marshal.FreeHGlobal(bufferPtr);
+            }
         }
 
         public string Description

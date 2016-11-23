@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.InteropServices;
+using System.Text;
 using Microsoft.Win32.SafeHandles;
 using winsvc.Enumerations;
 using winsvc.Flags;
@@ -46,12 +48,28 @@ namespace winsvc
             string binaryPathName, 
             string loadOrderGroup, 
             IntPtr tagId, 
-            string dependencies,
+            ICollection<string> dependencies,
             string serviceStartName, 
             string password)
         {
-            var serviceHandle = NativeMethods.CreateService(handle, serviceName, displayName, (uint) desiredAccess, (uint) serviceType,
-                (uint) startType, (uint) errorControl, binaryPathName, loadOrderGroup, tagId, dependencies, serviceStartName, password);
+            string deps = (dependencies?.Any() ?? false) ? string.Join("\0", dependencies) : null;
+
+            var serviceHandle = NativeMethods.CreateService(
+                    handle, 
+                    serviceName, 
+                    displayName, 
+                    (uint) desiredAccess, 
+                    (uint) serviceType,
+                    (uint) startType, 
+                    (uint) errorControl, 
+                    binaryPathName, 
+                    loadOrderGroup, 
+                    tagId, 
+                    deps, 
+                    serviceStartName, 
+                    password
+            );
+
             if (serviceHandle == IntPtr.Zero)
             {
                 throw new Win32Exception();

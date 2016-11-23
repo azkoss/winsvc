@@ -18,7 +18,7 @@ namespace winsvc
                                 string binaryPathName,
                                 string loadOrderGroup,
                                 IntPtr tagId,
-                                string dependencies,
+                                ICollection<string> dependencies,
                                 string serviceStartName,
                                 string password);
 

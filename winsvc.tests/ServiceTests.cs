@@ -1,10 +1,10 @@
 using System;
+using System.Linq;
 using System.Threading;
 using dummy_service;
 using NUnit.Framework;
 using winsvc.Enumerations;
 using winsvc.Flags;
-using winsvc.Structs;
 
 namespace winsvc.tests
 {
@@ -197,5 +197,43 @@ namespace winsvc.tests
                 Assert.That(service.QueryServiceConfig().DisplayName, Is.EqualTo("New Display Name"));
             }
         }
+
+        [Test]
+        public void EnumDependentServices()
+        {
+            using (var scm = ServiceControlManager.OpenServiceControlManager(null, SCM_ACCESS.SC_MANAGER_CREATE_SERVICE | SCM_ACCESS.SC_MANAGER_ENUMERATE_SERVICE))
+            {
+                // Just pick the first two services to be dependencies
+                var dependentServiceNames = scm.EnumServicesStatus().Select(ss => ss.ServiceName).Take(1).ToList();
+
+                var path = typeof(DummyService).Assembly.Location;
+
+                using (scm.CreateService(
+                    DummyService.Name,
+                    DummyService.Name,
+                    SERVICE_ACCESS.SERVICE_ALL_ACCESS,
+                    SERVICE_TYPE.SERVICE_WIN32_OWN_PROCESS,
+                    SERVICE_START_TYPE.SERVICE_AUTO_START,
+                    SERVICE_ERROR_CONTROL.SERVICE_ERROR_NORMAL,
+                    path,
+                    "",
+                    IntPtr.Zero,
+                    dependentServiceNames,
+                    null,
+                    null))
+                {
+                }
+
+                using (var service = scm.OpenService(dependentServiceNames.First(), SERVICE_ACCESS.SERVICE_ENUMERATE_DEPENDENTS))
+                {
+                    var serviceName = service.EnumDependentServices(SERVICE_STATES.SERVICE_STATE_ALL).Select(ss => ss.ServiceName).First();
+
+                    Assert.That(serviceName, Is.EqualTo(DummyService.Name));
+                }
+
+            }
+        }
+
+
     }
 }

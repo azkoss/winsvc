@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using winsvc.Enumerations;
 using winsvc.Flags;
 using winsvc.Structs;
@@ -21,13 +22,15 @@ namespace winsvc
             string     binaryPathName,
             string     loadOrderGroup,
             IntPtr     tagId,
-            string     dependencies,
+            string     dependencies, // TODO Change to IEnumerable<string>
             string     serviceStartName,
             string     password,
             string     displayName
         );
 
         SERVICE_STATUS QueryServiceStatus();
+
+        IEnumerable<ENUM_SERVICE_STATUS> EnumDependentServices(SERVICE_STATES states);
 
         string Description { get; set; }
     }

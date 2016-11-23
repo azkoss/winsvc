@@ -3,7 +3,6 @@ using System.ComponentModel;
 using System.Linq;
 using dummy_service;
 using NUnit.Framework;
-using NUnit.Framework.Constraints;
 using winsvc.Enumerations;
 using winsvc.Flags;
 
@@ -129,7 +128,7 @@ namespace winsvc.tests
                 path,
                 "",
                 IntPtr.Zero,
-                "",
+                null,
                 null,
                 null);
         }

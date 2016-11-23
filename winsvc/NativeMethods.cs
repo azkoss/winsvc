@@ -61,6 +61,15 @@ namespace winsvc
             ref UInt32 resumeHandle);
 
         [DllImport("advapi32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
+        internal static extern bool EnumDependentServices(
+            IntPtr serviceHandle,
+            SERVICE_STATES serviceState,
+            IntPtr bufferPtr,
+            Int32 bufferSize,
+            ref Int32 bufferNeeded,
+            ref Int32 servicesReturned);
+
+        [DllImport("advapi32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
         internal static extern bool QueryServiceConfig(
             IntPtr serviceHandle, 
             IntPtr bufferPtr, 

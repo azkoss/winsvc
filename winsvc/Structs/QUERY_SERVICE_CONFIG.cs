@@ -16,7 +16,7 @@ namespace winsvc.Structs
         public string BinaryPathName;
         public string LoadOrderGroup;
         public UInt32 TagId;
-        public string Dependencies;
+        public string Dependencies; // TODO Change to ICollection<string> and Marshall that
         public string ServiceStartName;
         public string DisplayName;
     }
