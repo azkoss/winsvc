@@ -1,6 +1,5 @@
 using System;
 using System.Linq;
-using System.Threading;
 using dummy_service;
 using NUnit.Framework;
 using winsvc.Enumerations;
@@ -40,9 +39,9 @@ namespace winsvc.tests
             using (var service = ServiceControlManagerTests.CreateDummyService(scm))
             {
                 service.Start(new string[] {});
-                WaitForServiceToStart(service);
+                service.WaitForServiceToStart();
 
-                StopServiceAndWait(service);
+                service.StopServiceAndWait();
             }
         }
 
@@ -56,38 +55,11 @@ namespace winsvc.tests
 
                 service.Start(new string[]{});
 
-                WaitForServiceToStart(service);
+                service.WaitForServiceToStart();
 
                 Assert.That(service.QueryServiceStatus().dwCurrentState, Is.EqualTo(SERVICE_STATE.SERVICE_RUNNING));
 
-                StopServiceAndWait(service);
-            }
-        }
-
-        private static void StopServiceAndWait(IService service)
-        {
-            StopService(service);
-            WaitForServiceToStop(service);
-        }
-
-        private static void StopService(IService service)
-        {
-            service.Control(SERVICE_CONTROL.SERVICE_CONTROL_STOP);
-        }
-
-        private static void WaitForServiceToStop(IService service)
-        {
-            while (service.QueryServiceStatus().dwCurrentState != SERVICE_STATE.SERVICE_STOPPED)
-            {
-                Thread.Sleep(10);
-            }
-        }
-
-        private static void WaitForServiceToStart(IService service)
-        {
-            while (service.QueryServiceStatus().dwCurrentState != SERVICE_STATE.SERVICE_RUNNING)
-            {
-                Thread.Sleep(10);
+                service.StopServiceAndWait();
             }
         }
 
@@ -115,10 +87,10 @@ namespace winsvc.tests
                 Assert.That(status.currentState, Is.EqualTo(SERVICE_STATE.SERVICE_STOPPED));
 
                 service.Start(new string[] {});
-                WaitForServiceToStart(service);
+                service.WaitForServiceToStart();
                 Assert.That(service.QueryServiceStatusEx().currentState, Is.EqualTo(SERVICE_STATE.SERVICE_RUNNING));
 
-                StopServiceAndWait(service);
+                service.StopServiceAndWait();
             }
         }
 

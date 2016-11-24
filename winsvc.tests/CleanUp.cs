@@ -1,5 +1,4 @@
 using System.Linq;
-using System.Threading;
 using dummy_service;
 using winsvc.Enumerations;
 using winsvc.Flags;
@@ -27,12 +26,7 @@ namespace winsvc.tests
             {
                 if (service.QueryServiceStatus().dwCurrentState == SERVICE_STATE.SERVICE_RUNNING)
                 {
-                    service.Control(SERVICE_CONTROL.SERVICE_CONTROL_STOP);
-
-                    while (service.QueryServiceStatus().dwCurrentState != SERVICE_STATE.SERVICE_STOPPED)
-                    {
-                        Thread.Sleep(10);
-                    }
+                    service.StopServiceAndWait();
                 }
 
                 service.Delete();
