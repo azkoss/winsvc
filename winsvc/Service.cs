@@ -13,6 +13,7 @@ namespace winsvc
     {
         // ReSharper disable once InconsistentNaming
         private const int ERROR_INSUFFICIENT_BUFFER = 122;
+        private const int SC_STATUS_PROCESS_INFO = 0;
 
         public Service(IntPtr serviceHandle) : base(true)
         {
@@ -117,6 +118,39 @@ namespace winsvc
             }
 
             return status;
+        }
+
+        public SERVICE_STATUS_PROCESS QueryServiceStatusEx()
+        {
+            int needed = 0;
+
+            if (NativeMethods.QueryServiceStatusEx(handle, SC_STATUS_PROCESS_INFO, IntPtr.Zero, 0, ref needed))
+            {
+                throw new ApplicationException($"Unexpected success in {nameof(Service)}.{nameof(QueryServiceStatusEx)}");
+            }
+
+            // We expect an ERROR_MORE_DATA error as the buffer size passed in was zero, otherwise something strage is going on
+            if (Marshal.GetLastWin32Error() != ERROR_INSUFFICIENT_BUFFER)
+            {
+                throw new Win32Exception();
+            }
+
+            IntPtr bufferPtr = Marshal.AllocHGlobal(needed);
+            var ptr = bufferPtr;
+            try
+            {
+                if (!NativeMethods.QueryServiceStatusEx(handle, SC_STATUS_PROCESS_INFO, bufferPtr, needed, ref needed))
+                {
+                    throw new Win32Exception();
+                }
+
+                return (SERVICE_STATUS_PROCESS) Marshal.PtrToStructure(ptr, typeof(SERVICE_STATUS_PROCESS));
+            }
+            finally
+            {
+                Marshal.FreeHGlobal(bufferPtr);
+            }
+
         }
 
         public IEnumerable<ENUM_SERVICE_STATUS> EnumDependentServices(SERVICE_STATES states)

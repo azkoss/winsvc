@@ -106,6 +106,23 @@ namespace winsvc.tests
         }
 
         [Test]
+        public void QueryServiceStatusEx()
+        {
+            using (var scm = ServiceControlManager.OpenServiceControlManager(null, SCM_ACCESS.SC_MANAGER_CREATE_SERVICE))
+            using (var service = ServiceControlManagerTests.CreateDummyService(scm))
+            {
+                var status = service.QueryServiceStatusEx();
+                Assert.That(status.currentState, Is.EqualTo(SERVICE_STATE.SERVICE_STOPPED));
+
+                service.Start(new string[] {});
+                WaitForServiceToStart(service);
+                Assert.That(service.QueryServiceStatusEx().currentState, Is.EqualTo(SERVICE_STATE.SERVICE_RUNNING));
+
+                StopServiceAndWait(service);
+            }
+        }
+
+        [Test]
         public void Description()
         {
             using (var scm = ServiceControlManager.OpenServiceControlManager(null, SCM_ACCESS.SC_MANAGER_CREATE_SERVICE))

@@ -30,6 +30,8 @@ namespace winsvc
 
         SERVICE_STATUS QueryServiceStatus();
 
+        SERVICE_STATUS_PROCESS QueryServiceStatusEx();
+
         IEnumerable<ENUM_SERVICE_STATUS> EnumDependentServices(SERVICE_STATES states);
 
         string Description { get; set; }

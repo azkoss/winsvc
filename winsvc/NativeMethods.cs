@@ -109,5 +109,13 @@ namespace winsvc
         [DllImport("advapi32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
         public static extern bool QueryServiceStatus(IntPtr hService, ref SERVICE_STATUS dwServiceStatus);
 
+        [DllImport("advapi32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
+        internal static extern bool QueryServiceStatusEx(
+            IntPtr serviceHandle, 
+            UInt32 infoLevel, 
+            IntPtr buffer, 
+            Int32 bufferSize, 
+            ref Int32 bytesNeeded
+        );
     }
 }
