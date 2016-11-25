@@ -119,6 +119,17 @@ namespace winsvc.tests
             }
         }
 
+        [Test]
+        public void EnumServicesStatusEx()
+        {
+            using (var scm = ServiceControlManager.OpenServiceControlManager(null, SCM_ACCESS.SC_MANAGER_CREATE_SERVICE | SCM_ACCESS.SC_MANAGER_ENUMERATE_SERVICE))
+            using (CreateDummyService(scm))
+            {
+                var service = scm.EnumServicesStatusEx().First(s => s.ServiceName == DummyService.Name);
+                Assert.That(service.ServiceStatusProcess.currentState, Is.EqualTo(SERVICE_STATE.SERVICE_STOPPED));
+            }
+        }
+
         public static IService CreateDummyService(IServiceControlManager scm)
         {
             var path = typeof(DummyService).Assembly.Location;

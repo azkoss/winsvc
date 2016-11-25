@@ -89,6 +89,7 @@
     <Compile Include="Service.cs" />
     <Compile Include="ServiceControlManager.cs" />
     <Compile Include="Flags\SERVICE_ACCESS.cs" />
+    <Compile Include="Structs\ENUM_SERVICE_STATUS_PROCESS.cs" />
     <Compile Include="Structs\QUERY_SERVICE_CONFIG.cs" />
     <Compile Include="Structs\SERVICE_DESCRIPTION.cs" />
     <Compile Include="Structs\SERVICE_STATUS.cs" />

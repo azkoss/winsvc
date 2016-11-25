@@ -23,5 +23,6 @@ namespace winsvc
                                 string password);
 
         IEnumerable<ENUM_SERVICE_STATUS> EnumServicesStatus();
+        IEnumerable<ENUM_SERVICE_STATUS_PROCESS> EnumServicesStatusEx();
     }
 }

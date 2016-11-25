@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
 using Microsoft.Win32.SafeHandles;
 using winsvc.Enumerations;
 using winsvc.Flags;
@@ -13,6 +12,11 @@ namespace winsvc
 {
     public sealed class ServiceControlManager : SafeHandleZeroOrMinusOneIsInvalid, IServiceControlManager
     {
+        // ReSharper disable InconsistentNaming
+        private const int ERROR_MORE_DATA = 234;
+        private const int SC_ENUM_PROCESS_INFO = 0;
+        // ReSharper restore InconsistentNaming
+
         private ServiceControlManager(string machineName, SCM_ACCESS desiredAccess) : base(true)
         {
             handle = NativeMethods.OpenSCManager(machineName, null, (uint) desiredAccess);
@@ -80,9 +84,6 @@ namespace winsvc
 
         public IEnumerable<ENUM_SERVICE_STATUS> EnumServicesStatus()
         {
-            // ReSharper disable once InconsistentNaming
-            const int ERROR_MORE_DATA = 234;
-
             int needed = 0;
             int servicesReturned = 0;
             uint resumeHandle = 0;
@@ -113,6 +114,64 @@ namespace winsvc
                 {
                     yield return (ENUM_SERVICE_STATUS) Marshal.PtrToStructure(ptr, typeof(ENUM_SERVICE_STATUS));
                     ptr += Marshal.SizeOf(typeof(ENUM_SERVICE_STATUS));
+                }
+            }
+            finally
+            {
+                Marshal.FreeHGlobal(bufferPtr);
+            }
+        }
+
+        public IEnumerable<ENUM_SERVICE_STATUS_PROCESS> EnumServicesStatusEx()
+        {
+            int needed = 0;
+            int servicesReturned = 0;
+            uint resumeHandle = 0;
+
+            if (NativeMethods.EnumServicesStatusEx(
+                handle, 
+                SC_ENUM_PROCESS_INFO, 
+                SERVICE_TYPE.SERVICE_WIN32, 
+                SERVICE_STATE_FLAGS.SERVICE_STATE_ALL, 
+                IntPtr.Zero, 
+                0, 
+                ref needed, 
+                ref servicesReturned, 
+                ref resumeHandle, 
+                null))
+            {
+                throw new ApplicationException("Unexpected success enumerating services with zero buffer");
+            }
+
+            // We expect an ERROR_MORE_DATA error as the buffer size passed in was zero, otherwise something strage is going on
+            if (Marshal.GetLastWin32Error() != ERROR_MORE_DATA)
+            {
+                throw new Win32Exception();
+            }
+
+            IntPtr bufferPtr = Marshal.AllocHGlobal(needed);
+            var ptr = bufferPtr;
+            try
+            {
+                if (!NativeMethods.EnumServicesStatusEx(
+                    handle,
+                    SC_ENUM_PROCESS_INFO,
+                    SERVICE_TYPE.SERVICE_WIN32, 
+                    SERVICE_STATE_FLAGS.SERVICE_STATE_ALL, 
+                    bufferPtr,
+                    needed,
+                    ref needed,
+                    ref servicesReturned,
+                    ref resumeHandle,
+                    null))
+                {
+                    throw new Win32Exception();
+                }
+
+                for (int i = 0; i < servicesReturned; i++)
+                {
+                    yield return (ENUM_SERVICE_STATUS_PROCESS)Marshal.PtrToStructure(ptr, typeof(ENUM_SERVICE_STATUS_PROCESS));
+                    ptr += Marshal.SizeOf(typeof(ENUM_SERVICE_STATUS_PROCESS));
                 }
             }
             finally

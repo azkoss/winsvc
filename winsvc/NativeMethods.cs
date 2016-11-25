@@ -60,6 +60,19 @@ namespace winsvc
             ref Int32 servicesReturned, 
             ref UInt32 resumeHandle);
 
+        [DllImport("advapi32.dll", SetLastError = true, CharSet = CharSet.Auto)]
+        public static extern bool EnumServicesStatusEx(IntPtr hSCManager,
+            int infoLevel, 
+            SERVICE_TYPE serviceType,
+            SERVICE_STATE_FLAGS serviceState, 
+            IntPtr services, 
+            Int32 bufSize,
+            ref Int32 bytesNeeded, 
+            ref Int32 servicesReturned,
+            ref UInt32 resumeHandle, 
+            string groupName
+        );
+
         [DllImport("advapi32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
         internal static extern bool EnumDependentServices(
             IntPtr serviceHandle,
