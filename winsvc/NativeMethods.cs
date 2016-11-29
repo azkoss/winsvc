@@ -130,5 +130,21 @@ namespace winsvc
             Int32 bufferSize, 
             ref Int32 bytesNeeded
         );
+
+        [DllImport("advapi32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
+        internal static extern bool GetServiceKeyName(
+            IntPtr hSCManager, 
+            string lpDisplayName,
+            IntPtr lpServiceName,
+            ref Int32 bytesNeeded
+        );
+
+        [DllImport("advapi32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
+        internal static extern bool GetServiceDisplayName(
+            IntPtr hSCManager, 
+            string lpServiceName,
+            IntPtr lpdisplayName,
+            ref Int32 bytesNeeded
+        );
     }
 }

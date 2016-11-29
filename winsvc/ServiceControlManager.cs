@@ -14,6 +14,7 @@ namespace winsvc
     {
         // ReSharper disable InconsistentNaming
         private const int ERROR_MORE_DATA = 234;
+        private const int ERROR_INSUFFICIENT_BUFFER = 122;
         private const int SC_ENUM_PROCESS_INFO = 0;
         // ReSharper restore InconsistentNaming
 
@@ -173,6 +174,72 @@ namespace winsvc
                     yield return (ENUM_SERVICE_STATUS_PROCESS)Marshal.PtrToStructure(ptr, typeof(ENUM_SERVICE_STATUS_PROCESS));
                     ptr += Marshal.SizeOf(typeof(ENUM_SERVICE_STATUS_PROCESS));
                 }
+            }
+            finally
+            {
+                Marshal.FreeHGlobal(bufferPtr);
+            }
+        }
+
+        public string GetServiceKeyName(string displayName)
+        {
+            Int32 needed = 0;
+
+            if (NativeMethods.GetServiceKeyName(handle, displayName, IntPtr.Zero, ref needed))
+            {
+                throw new ApplicationException($"Unexpected success in {nameof(ServiceControlManager)}.{nameof(GetServiceKeyName)}");
+            }
+
+            if (Marshal.GetLastWin32Error() != ERROR_INSUFFICIENT_BUFFER)
+            {
+                throw new Win32Exception();
+            }
+
+            needed = 2 * (needed + 1); // For null terminator and wide chars
+
+            IntPtr bufferPtr = Marshal.AllocHGlobal(needed);
+
+            try
+            {
+                if (!NativeMethods.GetServiceKeyName(handle, displayName, bufferPtr, ref needed))
+                {
+                    throw new Win32Exception();
+                }
+
+                return Marshal.PtrToStringUni(bufferPtr);
+            }
+            finally
+            {
+                Marshal.FreeHGlobal(bufferPtr);
+            }
+        }
+
+        public string GetServiceDisplayName(string serviceName)
+        {
+            Int32 needed = 0;
+
+            if (NativeMethods.GetServiceDisplayName(handle, serviceName, IntPtr.Zero, ref needed))
+            {
+                throw new ApplicationException($"Unexpected success in {nameof(ServiceControlManager)}.{nameof(GetServiceKeyName)}");
+            }
+
+            if (Marshal.GetLastWin32Error() != ERROR_INSUFFICIENT_BUFFER)
+            {
+                throw new Win32Exception();
+            }
+
+            needed = 2 * (needed + 1); // For null terminator and wide chars
+
+            IntPtr bufferPtr = Marshal.AllocHGlobal(needed);
+
+            try
+            {
+                if (!NativeMethods.GetServiceDisplayName(handle, serviceName, bufferPtr, ref needed))
+                {
+                    throw new Win32Exception();
+                }
+
+                return Marshal.PtrToStringUni(bufferPtr);
             }
             finally
             {

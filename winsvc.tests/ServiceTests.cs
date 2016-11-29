@@ -71,7 +71,7 @@ namespace winsvc.tests
             {
                 var config = service.QueryServiceConfig();
 
-                Assert.That(config.DisplayName, Is.EqualTo(DummyService.Name));
+                Assert.That(config.DisplayName, Is.EqualTo(DummyService.DisplayName));
 
                 // Service is cleaned up in TearDown
             }
@@ -103,7 +103,7 @@ namespace winsvc.tests
                 {
                     service.Description = "Service Description";
                 }
-                using (var service = scm.OpenService(DummyService.Name, SERVICE_ACCESS.SERVICE_QUERY_CONFIG))
+                using (var service = scm.OpenService(DummyService.SvcName, SERVICE_ACCESS.SERVICE_QUERY_CONFIG))
                 {
                     Assert.That(service.Description, Is.EqualTo("Service Description"));
                 }
@@ -198,8 +198,8 @@ namespace winsvc.tests
                 var path = typeof(DummyService).Assembly.Location;
 
                 using (scm.CreateService(
-                    DummyService.Name,
-                    DummyService.Name,
+                    DummyService.DisplayName,
+                    DummyService.DisplayName,
                     SERVICE_ACCESS.SERVICE_ALL_ACCESS,
                     SERVICE_TYPE.SERVICE_WIN32_OWN_PROCESS,
                     SERVICE_START_TYPE.SERVICE_AUTO_START,
@@ -217,7 +217,7 @@ namespace winsvc.tests
                 {
                     var serviceName = service.EnumDependentServices(SERVICE_STATES.SERVICE_STATE_ALL).Select(ss => ss.ServiceName).First();
 
-                    Assert.That(serviceName, Is.EqualTo(DummyService.Name));
+                    Assert.That(serviceName, Is.EqualTo(DummyService.DisplayName));
                 }
 
             }

@@ -103,7 +103,7 @@ namespace winsvc.tests
             using (CreateDummyService(scm))
             {
                 var services = scm.EnumServicesStatus();
-                Assert.That(services.Count(s => s.ServiceName == DummyService.Name), Is.EqualTo(1));
+                Assert.That(services.Count(s => s.ServiceName == DummyService.SvcName), Is.EqualTo(1));
             }
         }
 
@@ -125,8 +125,32 @@ namespace winsvc.tests
             using (var scm = ServiceControlManager.OpenServiceControlManager(null, SCM_ACCESS.SC_MANAGER_CREATE_SERVICE | SCM_ACCESS.SC_MANAGER_ENUMERATE_SERVICE))
             using (CreateDummyService(scm))
             {
-                var service = scm.EnumServicesStatusEx().First(s => s.ServiceName == DummyService.Name);
+                var service = scm.EnumServicesStatusEx().First(s => s.ServiceName == DummyService.SvcName);
                 Assert.That(service.ServiceStatusProcess.currentState, Is.EqualTo(SERVICE_STATE.SERVICE_STOPPED));
+            }
+        }
+
+        [Test]
+        public void GetServiceKeyName()
+        {
+            using (var scm = ServiceControlManager.OpenServiceControlManager(null, SCM_ACCESS.SC_MANAGER_CREATE_SERVICE))
+            {
+                using (CreateDummyService(scm))
+                {
+                }
+                Assert.That(scm.GetServiceKeyName(DummyService.DisplayName), Is.EqualTo(DummyService.SvcName));
+            }
+        }
+
+        [Test]
+        public void GetServiceDisplayName()
+        {
+            using (var scm = ServiceControlManager.OpenServiceControlManager(null, SCM_ACCESS.SC_MANAGER_CREATE_SERVICE))
+            {
+                using (CreateDummyService(scm))
+                {
+                }
+                Assert.That(scm.GetServiceDisplayName(DummyService.SvcName), Is.EqualTo(DummyService.DisplayName));
             }
         }
 
@@ -134,8 +158,8 @@ namespace winsvc.tests
         {
             var path = typeof(DummyService).Assembly.Location;
 
-            return scm.CreateService(DummyService.Name, 
-                DummyService.Name,
+            return scm.CreateService(DummyService.SvcName, 
+                DummyService.DisplayName,
                 SERVICE_ACCESS.SERVICE_ALL_ACCESS,
                 SERVICE_TYPE.SERVICE_WIN32_OWN_PROCESS,
                 SERVICE_START_TYPE.SERVICE_AUTO_START,

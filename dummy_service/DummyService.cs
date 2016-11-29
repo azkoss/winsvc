@@ -7,12 +7,13 @@ namespace dummy_service
     {
         private readonly AutoResetEvent _event = new AutoResetEvent(false);
 
-        public static string Name = "Dummy Service";
+        public static string DisplayName = "Dummy Service";
+        public static string SvcName = "DummyService";
         private Thread _thread;
 
         public DummyService()
         {
-            ServiceName = Name;
+            ServiceName = SvcName;
             CanShutdown = true;
             CanPauseAndContinue = false;
             CanStop = true;

@@ -13,7 +13,7 @@ namespace winsvc.tests
             {
                 var services = scm.EnumServicesStatus();
 
-                foreach (var serviceName in services.Select(serviceStatus => serviceStatus.ServiceName).Where(name => name.StartsWith(DummyService.Name) || name.StartsWith(DummyService.Name)))
+                foreach (var serviceName in services.Select(serviceStatus => serviceStatus.ServiceName).Where(name => name.StartsWith(DummyService.DisplayName) || name.StartsWith(DummyService.SvcName)))
                 {
                     DeleteService(scm, serviceName);
                 }

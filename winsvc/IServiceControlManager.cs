@@ -24,5 +24,8 @@ namespace winsvc
 
         IEnumerable<ENUM_SERVICE_STATUS> EnumServicesStatus();
         IEnumerable<ENUM_SERVICE_STATUS_PROCESS> EnumServicesStatusEx();
+
+        string GetServiceKeyName(string displayName);
+        string GetServiceDisplayName(string serviceName);
     }
 }
