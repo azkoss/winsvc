@@ -1,4 +1,5 @@
 // ReSharper disable InconsistentNaming
+// ReSharper disable UnusedMember.Global
 namespace winsvc.Enumerations
 {
     internal enum SERVICE_CONFIG

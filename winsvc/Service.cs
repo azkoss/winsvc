@@ -11,9 +11,10 @@ namespace winsvc
 {
     internal sealed class Service : SafeHandleZeroOrMinusOneIsInvalid, IService
     {
-        // ReSharper disable once InconsistentNaming
+        // ReSharper disable InconsistentNaming
         private const int ERROR_INSUFFICIENT_BUFFER = 122;
         private const int SC_STATUS_PROCESS_INFO = 0;
+        // ReSharper restore InconsistentNaming
 
         public Service(IntPtr serviceHandle) : base(true)
         {
