@@ -1,9 +1,11 @@
 using System;
 using System.Linq;
+using System.Threading;
 using dummy_service;
 using NUnit.Framework;
 using winsvc.Enumerations;
 using winsvc.Flags;
+using winsvc.Structs;
 
 namespace winsvc.tests
 {
@@ -44,6 +46,50 @@ namespace winsvc.tests
                 service.StopServiceAndWait();
             }
         }
+
+        [Test]
+        public void ControlService()
+        {
+            using (var scm = ServiceControlManager.OpenServiceControlManager(null, SCM_ACCESS.SC_MANAGER_CREATE_SERVICE))
+            using (var service = ServiceControlManagerTests.CreateDummyService(scm))
+            {
+                service.Start(new string[] {});
+                service.WaitForServiceToStart();
+
+                service.Control(SERVICE_CONTROL.SERVICE_CONTROL_PAUSE);
+                service.WaitForServiceStatus(SERVICE_STATE.SERVICE_PAUSED);
+
+                service.Control(SERVICE_CONTROL.SERVICE_CONTROL_CONTINUE);
+                service.WaitForServiceStatus(SERVICE_STATE.SERVICE_RUNNING);
+
+
+                service.StopServiceAndWait();
+            }
+        }
+
+
+        [Test]
+        public void ControlServiceEx()
+        {
+            using (var scm = ServiceControlManager.OpenServiceControlManager(null, SCM_ACCESS.SC_MANAGER_CREATE_SERVICE))
+            using (var service = ServiceControlManagerTests.CreateDummyService(scm))
+            {
+                service.Start(new string[] {});
+                service.WaitForServiceToStart();
+
+                var parameters = new SERVICE_CONTROL_STATUS_REASON_PARAMS();
+                service.ControlEx(SERVICE_CONTROL.SERVICE_CONTROL_PAUSE, ref parameters);
+                Assert.That(parameters.serviceStatus.currentState, Is.Not.EqualTo(SERVICE_STATE.SERVICE_RUNNING));
+                service.WaitForServiceStatus(SERVICE_STATE.SERVICE_PAUSED);
+
+                service.ControlEx(SERVICE_CONTROL.SERVICE_CONTROL_CONTINUE, ref parameters);
+                service.WaitForServiceStatus(SERVICE_STATE.SERVICE_RUNNING);
+
+
+                service.StopServiceAndWait();
+            }
+        }
+
 
         [Test]
         public void QueryServiceStatus()

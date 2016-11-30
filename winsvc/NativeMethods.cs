@@ -50,6 +50,9 @@ namespace winsvc
         internal static extern bool ControlService(IntPtr serviceHandle, SERVICE_CONTROL control, ref SERVICE_STATUS serviceStatus);
 
         [DllImport("advapi32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
+        internal static extern bool ControlServiceEx(IntPtr serviceHandle, SERVICE_CONTROL control, UInt32 infoLevel, ref SERVICE_CONTROL_STATUS_REASON_PARAMS controlParams);
+
+        [DllImport("advapi32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
         internal static extern bool EnumServicesStatus(
             IntPtr serviceControlObject, 
             SERVICE_TYPE serviceType, 

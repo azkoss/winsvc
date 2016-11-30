@@ -15,7 +15,7 @@ namespace dummy_service
         {
             ServiceName = SvcName;
             CanShutdown = true;
-            CanPauseAndContinue = false;
+            CanPauseAndContinue = true;
             CanStop = true;
         }
 

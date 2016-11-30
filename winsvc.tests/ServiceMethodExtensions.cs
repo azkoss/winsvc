@@ -13,7 +13,12 @@ namespace winsvc.tests
 
         public static void WaitForServiceToStart(this IService service)
         {
-            while (service.QueryServiceStatus().dwCurrentState != SERVICE_STATE.SERVICE_RUNNING)
+            WaitForServiceStatus(service, SERVICE_STATE.SERVICE_RUNNING);
+        }
+
+        public static void WaitForServiceStatus(this IService service, SERVICE_STATE state)
+        {
+            while (service.QueryServiceStatus().dwCurrentState != state)
             {
                 Thread.Sleep(10);
             }

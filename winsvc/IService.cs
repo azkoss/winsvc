@@ -12,6 +12,7 @@ namespace winsvc
         void Start(string[] serviceArgVectors);
 
         void Control(SERVICE_CONTROL control);
+        void ControlEx(SERVICE_CONTROL control, ref SERVICE_CONTROL_STATUS_REASON_PARAMS reason);
 
         QUERY_SERVICE_CONFIG QueryServiceConfig();
 

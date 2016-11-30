@@ -14,6 +14,7 @@ namespace winsvc
         // ReSharper disable InconsistentNaming
         private const int ERROR_INSUFFICIENT_BUFFER = 122;
         private const int SC_STATUS_PROCESS_INFO = 0;
+        private const int SERVICE_CONTROL_STATUS_REASON_INFO = 1;
         // ReSharper restore InconsistentNaming
 
         public Service(IntPtr serviceHandle) : base(true)
@@ -47,6 +48,14 @@ namespace winsvc
             var status = new SERVICE_STATUS();
 
             if (!NativeMethods.ControlService(handle, control, ref status))
+            {
+                throw new Win32Exception();
+            }
+        }
+
+        public void ControlEx(SERVICE_CONTROL control, ref SERVICE_CONTROL_STATUS_REASON_PARAMS reason)
+        {
+            if (!NativeMethods.ControlServiceEx(handle, control, SERVICE_CONTROL_STATUS_REASON_INFO, ref reason))
             {
                 throw new Win32Exception();
             }
