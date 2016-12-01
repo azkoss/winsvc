@@ -16,13 +16,23 @@ namespace winsvc
     internal static class NativeMethods
     {
         [DllImport("advapi32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
-        internal static extern IntPtr OpenSCManager(string machineName, string databaseName, UInt32 desiredAccess);
+        internal static extern IntPtr OpenSCManager(
+            string machineName, 
+            string databaseName, 
+            UInt32 desiredAccess
+        );
 
         [DllImport("advapi32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
-        internal static extern bool CloseServiceHandle(IntPtr serviceControlObject);
+        internal static extern bool CloseServiceHandle(
+            IntPtr serviceControlObject
+        );
 
         [DllImport("advapi32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
-        internal static extern IntPtr OpenService(IntPtr serviceControlObject, string serviceName, UInt32 desiredAccess);
+        internal static extern IntPtr OpenService(
+            IntPtr serviceControlObject, 
+            string serviceName, 
+            UInt32 desiredAccess
+        );
 
         [DllImport("advapi32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
         internal static extern IntPtr CreateService(
@@ -41,16 +51,31 @@ namespace winsvc
             string password);
 
         [DllImport("advapi32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
-        internal static extern bool DeleteService(IntPtr serviceHandle);
+        internal static extern bool DeleteService(
+            IntPtr serviceHandle
+        );
 
         [DllImport("advapi32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
-        internal static extern bool StartService(IntPtr serviceHandle, int argCount, string[] argVectors);
+        internal static extern bool StartService(
+            IntPtr serviceHandle, 
+            int argCount, 
+            string[] argVectors
+        );
 
         [DllImport("advapi32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
-        internal static extern bool ControlService(IntPtr serviceHandle, SERVICE_CONTROL control, ref SERVICE_STATUS serviceStatus);
+        internal static extern bool ControlService(
+            IntPtr serviceHandle, 
+            SERVICE_CONTROL control, 
+            ref SERVICE_STATUS serviceStatus
+        );
 
         [DllImport("advapi32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
-        internal static extern bool ControlServiceEx(IntPtr serviceHandle, SERVICE_CONTROL control, UInt32 infoLevel, ref SERVICE_CONTROL_STATUS_REASON_PARAMS controlParams);
+        internal static extern bool ControlServiceEx(
+            IntPtr serviceHandle, 
+            SERVICE_CONTROL control, 
+            UInt32 infoLevel, 
+            ref SERVICE_CONTROL_STATUS_REASON_PARAMS controlParams
+        );
 
         [DllImport("advapi32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
         internal static extern bool EnumServicesStatus(
@@ -83,14 +108,16 @@ namespace winsvc
             IntPtr bufferPtr,
             Int32 bufferSize,
             ref Int32 bufferNeeded,
-            ref Int32 servicesReturned);
+            ref Int32 servicesReturned
+        );
 
         [DllImport("advapi32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
         internal static extern bool QueryServiceConfig(
             IntPtr serviceHandle, 
             IntPtr bufferPtr, 
             Int32 bufferSize, 
-            ref Int32 bufferNeeded);
+            ref Int32 bufferNeeded
+        );
 
         [DllImport("advapi32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
         internal static extern bool ChangeServiceConfig(
@@ -104,7 +131,8 @@ namespace winsvc
             String lpDependencies, 
             String lpServiceStartName, 
             String lpPassword, 
-            String lpDisplayName);
+            String lpDisplayName
+        );
 
         [DllImport("advapi32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
         internal static extern bool ChangeServiceConfig2(
@@ -123,7 +151,10 @@ namespace winsvc
         );
 
         [DllImport("advapi32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
-        internal static extern bool QueryServiceStatus(IntPtr hService, ref SERVICE_STATUS dwServiceStatus);
+        internal static extern bool QueryServiceStatus(
+            IntPtr hService, 
+            ref SERVICE_STATUS dwServiceStatus
+        );
 
         [DllImport("advapi32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
         internal static extern bool QueryServiceStatusEx(
