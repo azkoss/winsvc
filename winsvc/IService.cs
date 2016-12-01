@@ -9,6 +9,8 @@ namespace winsvc
     public interface IService : IDisposable
     {
         void Delete();
+
+        void Start();
         void Start(string[] serviceArgVectors);
 
         void Control(SERVICE_CONTROL control);

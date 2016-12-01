@@ -40,7 +40,7 @@ namespace winsvc.tests
             using (var scm = ServiceControlManager.OpenServiceControlManager(null, SCM_ACCESS.SC_MANAGER_CREATE_SERVICE))
             using (var service = ServiceControlManagerTests.CreateDummyService(scm))
             {
-                service.Start(new string[] {});
+                service.Start();
                 service.WaitForServiceToStart();
 
                 service.StopServiceAndWait();
@@ -53,7 +53,7 @@ namespace winsvc.tests
             using (var scm = ServiceControlManager.OpenServiceControlManager(null, SCM_ACCESS.SC_MANAGER_CREATE_SERVICE))
             using (var service = ServiceControlManagerTests.CreateDummyService(scm))
             {
-                service.Start(new string[] {});
+                service.Start();
                 service.WaitForServiceToStart();
 
                 service.Control(SERVICE_CONTROL.SERVICE_CONTROL_PAUSE);
@@ -74,7 +74,7 @@ namespace winsvc.tests
             using (var scm = ServiceControlManager.OpenServiceControlManager(null, SCM_ACCESS.SC_MANAGER_CREATE_SERVICE))
             using (var service = ServiceControlManagerTests.CreateDummyService(scm))
             {
-                service.Start(new string[] {});
+                service.Start();
                 service.WaitForServiceToStart();
 
                 var parameters = new SERVICE_CONTROL_STATUS_REASON_PARAMS();
@@ -99,7 +99,7 @@ namespace winsvc.tests
             {
                 Assert.That(service.QueryServiceStatus().dwCurrentState, Is.EqualTo(SERVICE_STATE.SERVICE_STOPPED));
 
-                service.Start(new string[]{});
+                service.Start();
 
                 service.WaitForServiceToStart();
 
@@ -132,7 +132,7 @@ namespace winsvc.tests
                 var status = service.QueryServiceStatusEx();
                 Assert.That(status.currentState, Is.EqualTo(SERVICE_STATE.SERVICE_STOPPED));
 
-                service.Start(new string[] {});
+                service.Start();
                 service.WaitForServiceToStart();
                 Assert.That(service.QueryServiceStatusEx().currentState, Is.EqualTo(SERVICE_STATE.SERVICE_RUNNING));
 

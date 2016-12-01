@@ -35,6 +35,11 @@ namespace winsvc
             }
         }
 
+        public void Start()
+        {
+            Start(new string[] {});
+        }
+
         public void Start(string[] serviceArgVectors)
         {
             if (!NativeMethods.StartService(handle, serviceArgVectors.Length, serviceArgVectors))
