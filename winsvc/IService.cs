@@ -25,7 +25,7 @@ namespace winsvc
             string     binaryPathName,
             string     loadOrderGroup,
             IntPtr     tagId,
-            string     dependencies, // TODO Change to IEnumerable<string>
+            IEnumerable<string>     dependencies,
             string     serviceStartName,
             string     password,
             string     displayName

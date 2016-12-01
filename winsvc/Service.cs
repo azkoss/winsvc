@@ -102,11 +102,13 @@ namespace winsvc
             string binaryPathName, 
             string loadOrderGroup, 
             IntPtr tagId, 
-            string dependencies, // TODO Should be IEnumerable<string>
+            IEnumerable<string> dependencies,
             string serviceStartName, 
             string password, 
             string displayName)
         {
+            var dependenciesString = dependencies == null ? null : string.Join("\0", dependencies) + "\0"; // Collection of strings separated by null and terminated by double null
+
             if (!NativeMethods.ChangeServiceConfig(
                     handle, 
                     (uint) serviceType, 
@@ -115,7 +117,7 @@ namespace winsvc
                     binaryPathName,
                     loadOrderGroup, 
                     tagId, 
-                    dependencies,
+                    dependenciesString,
                     serviceStartName,
                     password,
                     displayName))
