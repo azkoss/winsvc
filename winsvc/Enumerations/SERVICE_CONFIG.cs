@@ -2,7 +2,7 @@
 // ReSharper disable UnusedMember.Global
 namespace winsvc.Enumerations
 {
-    internal enum SERVICE_CONFIG
+    internal enum SERVICE_CONFIG : uint
     {
         SERVICE_CONFIG_DESCRIPTION              = 1,
         SERVICE_CONFIG_FAILURE_ACTIONS          = 2,
@@ -13,8 +13,8 @@ namespace winsvc.Enumerations
         SERVICE_CONFIG_PRESHUTDOWN_INFO         = 7,
         SERVICE_CONFIG_TRIGGER_INFO             = 8,
         SERVICE_CONFIG_PREFERRED_NODE           = 9,
-        // reserved                             =         10
-        // reserved                             =         11
+        // reserved                             = 10,
+        // reserved                             = 11,
         SERVICE_CONFIG_LAUNCH_PROTECTED         = 12,    
     }
 }

@@ -11,6 +11,6 @@ namespace winsvc.Enumerations
         SERVICE_RUNNING          = 0x00000004,
         SERVICE_CONTINUE_PENDING = 0x00000005,
         SERVICE_PAUSE_PENDING    = 0x00000006,
-        SERVICE_PAUSED           = 0x00000007
+        SERVICE_PAUSED           = 0x00000007,
     }
 }
