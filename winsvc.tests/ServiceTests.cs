@@ -1,6 +1,5 @@
 using System;
 using System.Linq;
-using System.Threading;
 using dummy_service;
 using NUnit.Framework;
 using winsvc.Enumerations;
