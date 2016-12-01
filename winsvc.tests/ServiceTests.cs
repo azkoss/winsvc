@@ -47,6 +47,19 @@ namespace winsvc.tests
         }
 
         [Test]
+        public void StartServiceWithParameters()
+        {
+            using (var scm = ServiceControlManager.OpenServiceControlManager(null, SCM_ACCESS.SC_MANAGER_CREATE_SERVICE))
+            using (var service = ServiceControlManagerTests.CreateDummyService(scm))
+            {
+                service.Start(new[] {"Dummy Parameter"});
+                service.WaitForServiceToStart();
+
+                service.StopServiceAndWait();
+            }
+        }
+
+        [Test]
         public void ControlService()
         {
             using (var scm = ServiceControlManager.OpenServiceControlManager(null, SCM_ACCESS.SC_MANAGER_CREATE_SERVICE))
