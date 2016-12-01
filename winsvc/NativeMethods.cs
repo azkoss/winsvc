@@ -13,6 +13,8 @@ namespace winsvc
     // HANDLEs are marshalled as UIntPtr
     // DWORDs are marshalled as Int32
 
+    // Unicode calls on all methods
+
     internal static class NativeMethods
     {
         [DllImport("advapi32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
