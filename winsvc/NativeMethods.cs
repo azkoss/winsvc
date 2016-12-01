@@ -138,7 +138,7 @@ namespace winsvc
         internal static extern bool ChangeServiceConfig2(
             IntPtr hService,
             int dwInfoLevel,
-            [MarshalAs(UnmanagedType.Struct)] ref SERVICE_DESCRIPTION lpInfo
+            ref SERVICE_DESCRIPTION lpInfo
         );
 
         [DllImport("advapi32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
