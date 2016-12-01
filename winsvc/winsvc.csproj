@@ -71,14 +71,14 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Enumerations\CONTROLS_ACCEPTED.cs" />
+    <Compile Include="Flags\CONTROLS_ACCEPTED.cs" />
     <Compile Include="Enumerations\SERVICE_CONFIG.cs" />
     <Compile Include="Flags\SERVICE_STOP_REASON.cs" />
     <Compile Include="IService.cs" />
     <Compile Include="Structs\ENUM_SERVICE_STATUS.cs" />
     <Compile Include="Enumerations\SERVICE_CONTROL.cs" />
     <Compile Include="Enumerations\SERVICE_ERROR_CONTROL.cs" />
-    <Compile Include="Enumerations\SERVICE_START_TYPE.cs" />
+    <Compile Include="Flags\SERVICE_START_TYPE.cs" />
     <Compile Include="Enumerations\SERVICE_STATE.cs" />
     <Compile Include="Flags\SERVICE_STATE_FLAGS.cs" />
     <Compile Include="Flags\SERVICE_TYPE.cs" />

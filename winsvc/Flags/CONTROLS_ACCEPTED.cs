@@ -1,8 +1,9 @@
 using System;
+
 // ReSharper disable InconsistentNaming
 // ReSharper disable UnusedMember.Global
 
-namespace winsvc.Enumerations
+namespace winsvc.Flags
 {
     [Flags]
     internal enum CONTROLS_ACCEPTED : uint

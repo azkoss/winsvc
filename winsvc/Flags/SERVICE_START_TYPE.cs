@@ -3,7 +3,7 @@ using System;
 // ReSharper disable InconsistentNaming
 // ReSharper disable UnusedMember.Global
 
-namespace winsvc.Enumerations
+namespace winsvc.Flags
 {
     [Flags]
     public enum SERVICE_START_TYPE : uint
