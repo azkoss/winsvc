@@ -261,7 +261,7 @@ namespace winsvc.tests
 
                 using (var service = scm.OpenService(dependentServiceNames.First(), SERVICE_ACCESS.SERVICE_ENUMERATE_DEPENDENTS))
                 {
-                    var serviceName = service.EnumDependentServices(SERVICE_STATES.SERVICE_STATE_ALL).Select(ss => ss.ServiceName).First();
+                    var serviceName = service.EnumDependentServices(SERVICE_STATE_FLAGS.SERVICE_STATE_ALL).Select(ss => ss.ServiceName).First();
 
                     Assert.That(serviceName, Is.EqualTo(DummyService.DisplayName));
                 }

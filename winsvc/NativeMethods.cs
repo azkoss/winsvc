@@ -79,7 +79,7 @@ namespace winsvc
         [DllImport("advapi32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
         internal static extern bool EnumDependentServices(
             IntPtr serviceHandle,
-            SERVICE_STATES serviceState,
+            SERVICE_STATE_FLAGS serviceState,
             IntPtr bufferPtr,
             Int32 bufferSize,
             ref Int32 bufferNeeded,

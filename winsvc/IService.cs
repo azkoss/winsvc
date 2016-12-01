@@ -35,7 +35,7 @@ namespace winsvc
 
         SERVICE_STATUS_PROCESS QueryServiceStatusEx();
 
-        IEnumerable<ENUM_SERVICE_STATUS> EnumDependentServices(SERVICE_STATES states);
+        IEnumerable<ENUM_SERVICE_STATUS> EnumDependentServices(SERVICE_STATE_FLAGS states);
 
         string Description { get; set; }
     }

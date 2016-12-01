@@ -168,7 +168,7 @@ namespace winsvc
 
         }
 
-        public IEnumerable<ENUM_SERVICE_STATUS> EnumDependentServices(SERVICE_STATES states)
+        public IEnumerable<ENUM_SERVICE_STATUS> EnumDependentServices(SERVICE_STATE_FLAGS states)
         {
             // ReSharper disable once InconsistentNaming
             const int ERROR_MORE_DATA = 234;
