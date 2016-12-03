@@ -11,7 +11,7 @@ namespace winsvc.tests
         {
             using (var scm = ServiceControlManager.OpenServiceControlManager(null, SCM_ACCESS.SC_MANAGER_ENUMERATE_SERVICE))
             {
-                var services = scm.EnumServicesStatus();
+                var services = scm.EnumServicesStatus(SERVICE_TYPE.SERVICE_WIN32, SERVICE_STATE_FLAGS.SERVICE_STATE_ALL);
 
                 foreach (var serviceName in services.Select(serviceStatus => serviceStatus.ServiceName).Where(name => name.StartsWith(DummyService.DisplayName) || name.StartsWith(DummyService.SvcName)))
                 {

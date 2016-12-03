@@ -53,7 +53,7 @@ namespace winsvc.tests
             // Again just checking for a lack of exceptions at this stage
             using (var scm = ServiceControlManager.OpenServiceControlManager(null, SCM_ACCESS.SC_MANAGER_CONNECT | SCM_ACCESS.SC_MANAGER_ENUMERATE_SERVICE))
             {
-                var serviceName = scm.EnumServicesStatus().Select(ss => ss.ServiceName).First();
+                var serviceName = scm.EnumServicesStatus(SERVICE_TYPE.SERVICE_WIN32, SERVICE_STATE_FLAGS.SERVICE_STATE_ALL).Select(ss => ss.ServiceName).First();
                 using (scm.OpenService(serviceName, SERVICE_ACCESS.SERVICE_QUERY_STATUS))
                 {
                     // Service is cleaned up in TearDown
@@ -102,7 +102,7 @@ namespace winsvc.tests
             using (var scm = ServiceControlManager.OpenServiceControlManager(null, SCM_ACCESS.SC_MANAGER_CREATE_SERVICE | SCM_ACCESS.SC_MANAGER_ENUMERATE_SERVICE))
             using (CreateDummyService(scm))
             {
-                var services = scm.EnumServicesStatus();
+                var services = scm.EnumServicesStatus(SERVICE_TYPE.SERVICE_WIN32, SERVICE_STATE_FLAGS.SERVICE_STATE_ALL);
                 Assert.That(services.Count(s => s.ServiceName == DummyService.SvcName), Is.EqualTo(1));
             }
         }
@@ -113,7 +113,7 @@ namespace winsvc.tests
             using (var scm = ServiceControlManager.OpenServiceControlManager(null, 0))
             {
                 // ReSharper disable once AccessToDisposedClosure
-                Assert.That(() => scm.EnumServicesStatus().ToList(), 
+                Assert.That(() => scm.EnumServicesStatus(SERVICE_TYPE.SERVICE_WIN32, SERVICE_STATE_FLAGS.SERVICE_STATE_ALL).ToList(), 
                     Throws.TypeOf<Win32Exception>()
                           .With.Property("NativeErrorCode").EqualTo(ERROR_ACCESS_DENIED));
             }

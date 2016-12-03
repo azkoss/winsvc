@@ -141,7 +141,19 @@ namespace winsvc
                                 string serviceStartName,
                                 string password);
 
-        IEnumerable<ENUM_SERVICE_STATUS> EnumServicesStatus();
+        /// <summary>
+        /// Enumerates services in the specified service control manager database. The name and status of each service are provided. 
+        /// 
+        /// This function has been superseded by the EnumServicesStatusEx function. It returns the same information EnumServicesStatus 
+        /// returns, plus the process identifier and additional information for the service. In addition, EnumServicesStatusEx enables 
+        /// you to enumerate services that belong to a specified group.
+        /// </summary>
+        /// <param name="serviceType">The type of services to be enumerated.</param>
+        /// <param name="serviceState">The state of the services to be enumerated.</param>
+        /// <returns>An enumerator over ENUM_SERVICE_STATUS structures.</returns>
+        /// <exception cref="Win32Exception">Thrown if the underlying API call fails.</exception>
+        IEnumerable<ENUM_SERVICE_STATUS> EnumServicesStatus(SERVICE_TYPE serviceType, SERVICE_STATE_FLAGS serviceState);
+
         IEnumerable<ENUM_SERVICE_STATUS_PROCESS> EnumServicesStatusEx();
 
         string GetServiceKeyName(string displayName);

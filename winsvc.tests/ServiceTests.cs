@@ -252,7 +252,7 @@ namespace winsvc.tests
             using (var service = ServiceControlManagerTests.CreateDummyService(scm))
             {
                 // Just pick the first service to be dependency
-                var dependentServiceNames = scm.EnumServicesStatus().Select(ss => ss.ServiceName).Take(1).ToList();
+                var dependentServiceNames = scm.EnumServicesStatus(SERVICE_TYPE.SERVICE_WIN32, SERVICE_STATE_FLAGS.SERVICE_STATE_ALL).Select(ss => ss.ServiceName).Take(1).ToList();
                 service.ChangeServiceConfig(SERVICE_TYPE.SERVICE_NO_CHANGE, SERVICE_START_TYPE.SERVICE_NO_CHANGE, SERVICE_ERROR_CONTROL.SERVICE_NO_CHANGE, null, null, IntPtr.Zero, dependentServiceNames, null, null, null);
 
                 using (var dependentService = scm.OpenService(dependentServiceNames.First(), SERVICE_ACCESS.SERVICE_ENUMERATE_DEPENDENTS))
@@ -271,7 +271,7 @@ namespace winsvc.tests
             using (var scm = ServiceControlManager.OpenServiceControlManager(null, SCM_ACCESS.SC_MANAGER_CREATE_SERVICE | SCM_ACCESS.SC_MANAGER_ENUMERATE_SERVICE))
             {
                 // Just pick the first service to be dependency
-                var dependentServiceNames = scm.EnumServicesStatus().Select(ss => ss.ServiceName).Take(1).ToList();
+                var dependentServiceNames = scm.EnumServicesStatus(SERVICE_TYPE.SERVICE_WIN32, SERVICE_STATE_FLAGS.SERVICE_STATE_ALL).Select(ss => ss.ServiceName).Take(1).ToList();
 
                 var path = typeof(DummyService).Assembly.Location;
 

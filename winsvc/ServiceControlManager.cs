@@ -83,13 +83,13 @@ namespace winsvc
             return new Service(serviceHandle);
         }
 
-        public IEnumerable<ENUM_SERVICE_STATUS> EnumServicesStatus()
+        public IEnumerable<ENUM_SERVICE_STATUS> EnumServicesStatus(SERVICE_TYPE serviceType, SERVICE_STATE_FLAGS serviceState)
         {
             int needed = 0;
             int servicesReturned = 0;
             uint resumeHandle = 0;
 
-            if (NativeMethods.EnumServicesStatus(handle, SERVICE_TYPE.SERVICE_WIN32, SERVICE_STATE_FLAGS.SERVICE_STATE_ALL, IntPtr.Zero, 0, ref needed, ref servicesReturned, ref resumeHandle))
+            if (NativeMethods.EnumServicesStatus(handle, serviceType, serviceState, IntPtr.Zero, 0, ref needed, ref servicesReturned, ref resumeHandle))
             {
                 throw new ApplicationException("Unexpected success enumerating services with zero buffer");
             }
@@ -104,9 +104,7 @@ namespace winsvc
             var ptr = bufferPtr;
             try
             {
-                if (!NativeMethods.EnumServicesStatus(handle, SERVICE_TYPE.SERVICE_WIN32,
-                    SERVICE_STATE_FLAGS.SERVICE_STATE_ALL, bufferPtr, needed, ref needed, ref servicesReturned,
-                    ref resumeHandle))
+                if (!NativeMethods.EnumServicesStatus(handle, serviceType, serviceState, bufferPtr, needed, ref needed, ref servicesReturned, ref resumeHandle))
                 {
                     throw new Win32Exception();
                 }
