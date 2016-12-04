@@ -154,7 +154,7 @@ namespace winsvc
         /// <exception cref="Win32Exception">Thrown if the underlying API call fails.</exception>
         IEnumerable<ENUM_SERVICE_STATUS> EnumServicesStatus(SERVICE_TYPE serviceType, SERVICE_STATE_FLAGS serviceState);
 
-        IEnumerable<ENUM_SERVICE_STATUS_PROCESS> EnumServicesStatusEx();
+        IEnumerable<ENUM_SERVICE_STATUS_PROCESS> EnumServicesStatusEx(SERVICE_TYPE serviceType);
 
         string GetServiceKeyName(string displayName);
         string GetServiceDisplayName(string serviceName);
