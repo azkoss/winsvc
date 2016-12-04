@@ -121,7 +121,7 @@ namespace winsvc
             }
         }
 
-        public IEnumerable<ENUM_SERVICE_STATUS_PROCESS> EnumServicesStatusEx(SERVICE_TYPE serviceType)
+        public IEnumerable<ENUM_SERVICE_STATUS_PROCESS> EnumServicesStatusEx(SERVICE_TYPE serviceType, SERVICE_STATE_FLAGS serviceStateFlags)
         {
             int needed = 0;
             int servicesReturned = 0;
@@ -131,7 +131,7 @@ namespace winsvc
                 handle, 
                 SC_ENUM_PROCESS_INFO, 
                 serviceType, 
-                SERVICE_STATE_FLAGS.SERVICE_STATE_ALL, 
+                serviceStateFlags, 
                 IntPtr.Zero, 
                 0, 
                 ref needed, 
@@ -156,7 +156,7 @@ namespace winsvc
                     handle,
                     SC_ENUM_PROCESS_INFO,
                     serviceType, 
-                    SERVICE_STATE_FLAGS.SERVICE_STATE_ALL, 
+                    serviceStateFlags, 
                     bufferPtr,
                     needed,
                     ref needed,
