@@ -16,6 +16,6 @@ Starting a service is as easy as:
     using (var scm = ServiceControlManager.OpenServiceControlManager(null, SCM_ACCESS.SC_MANAGER_ALL_ACCESS))
     using (var service = scm.OpenService("Your Service Name", SERVICE_ACCESS.SERVICE_ALL_ACCESS))
     {
-        service.Start(new string[] {});
+        service.Start();
     }
 ```
