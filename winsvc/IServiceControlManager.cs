@@ -154,6 +154,13 @@ namespace winsvc
         /// <exception cref="Win32Exception">Thrown if the underlying API call fails.</exception>
         IEnumerable<ENUM_SERVICE_STATUS> EnumServicesStatus(SERVICE_TYPE serviceType, SERVICE_STATE_FLAGS serviceState);
 
+        /// <summary>
+        /// Enumerates services in the specified service control manager database.The name and status of each service are provided
+        /// </summary>
+        /// <param name="serviceType">The type of services to be enumerated.</param>
+        /// <param name="serviceStateFlags">The state of the services to be enumerated.</param>
+        /// <returns>An enumerator over ENUM_SERVICE_STATUS_PROCESS structures.</returns>
+        /// <exception cref="Win32Exception">Thrown if the underlying API call fails.</exception>
         IEnumerable<ENUM_SERVICE_STATUS_PROCESS> EnumServicesStatusEx(SERVICE_TYPE serviceType, SERVICE_STATE_FLAGS serviceStateFlags);
 
         string GetServiceKeyName(string displayName);
