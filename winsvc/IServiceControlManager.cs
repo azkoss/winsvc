@@ -163,7 +163,23 @@ namespace winsvc
         /// <exception cref="Win32Exception">Thrown if the underlying API call fails.</exception>
         IEnumerable<ENUM_SERVICE_STATUS_PROCESS> EnumServicesStatusEx(SERVICE_TYPE serviceType, SERVICE_STATE_FLAGS serviceStateFlags);
 
+        /// <summary>
+        /// Retrieves the service name of the specified service.
+        /// 
+        /// There are two names for a service: the service name and the display name. The service name is the name of the service's key
+        /// in the registry. The display name is a user-friendly name that appears in the Services control panel application, and is
+        /// used with the NET START command. Both names are specified with the CreateService function and can be modified with the 
+        /// ChangeServiceConfig function. Information specified for a service is stored in a key with the same name as the service 
+        /// name under the HKEY_LOCAL_MACHINE\System\CurrentControlSet\Services\ServiceName registry key.
+        /// 
+        /// To map the service name to the display name, use the GetServiceDisplayName function.To map the display name to the service 
+        /// name, use the GetServiceKeyName function.
+        /// </summary>
+        /// <param name="displayName">The service display name.</param>
+        /// <returns>The service name</returns>
+        /// <exception cref="Win32Exception">Thrown if the underlying API call fails.</exception>
         string GetServiceKeyName(string displayName);
+
         string GetServiceDisplayName(string serviceName);
     }
 }
