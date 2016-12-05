@@ -27,6 +27,19 @@ namespace winsvc
             }
         }
 
+        /// <summary>
+        /// Establishes a connection to the service control manager on the specified computer and opens the specified
+        /// service control manager database.
+        /// 
+        /// The returned ServiceControlManager implements IDisposable and should be used with a using statement.
+        /// </summary>
+        /// <param name="machineName">
+        /// The name of the target computer. If the pointer is NULL or points to an empty string, the function connects 
+        /// to the service control manager on the local computer.</param>
+        /// <param name="desiredAccess">
+        /// The access to the service control manager.</param>
+        /// <returns>An instance of IServiceControlManager</returns>
+        /// <exception cref="Win32Exception">Thrown if the underlying API call fails.</exception>
         public static IServiceControlManager OpenServiceControlManager(string machineName, SCM_ACCESS desiredAccess)
         {
             return new ServiceControlManager(machineName, desiredAccess);
