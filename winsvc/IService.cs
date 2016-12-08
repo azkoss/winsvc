@@ -104,6 +104,20 @@ namespace winsvc
         /// <exception cref="Win32Exception">Thrown if the underlying API call fails.</exception>
         void Control(SERVICE_CONTROL control);
 
+        /// <summary>
+        /// Sends a control code to a service.
+        /// 
+        /// The ControlService function asks the Service Control Manager (SCM) to send the requested control 
+        /// code to the service. The SCM sends the code if the service has specified that it will accept 
+        /// the code, and is in a state in which a control code can be sent to it.
+        /// </summary>
+        /// <param name="control">
+        /// The control code.
+        /// </param>
+        /// <param name="reason">
+        /// Contains service control parameters.
+        /// </param>
+        /// <exception cref="Win32Exception">Thrown if the underlying API call fails.</exception>
         void ControlEx(SERVICE_CONTROL control, ref SERVICE_CONTROL_STATUS_REASON_PARAMS reason);
 
         void Delete();
