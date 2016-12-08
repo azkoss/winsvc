@@ -137,6 +137,15 @@ namespace winsvc
         /// <exception cref="Win32Exception">Thrown if the underlying API call fails.</exception>
         void Delete();
 
+        /// <summary>
+        /// Retrieves the name and status of each service that depends on the specified service; that
+        /// is, the specified service must be running before the dependent services can run.
+        /// </summary>
+        /// <param name="states">
+        /// The state of the services to be enumerated.
+        /// </param>
+        /// <returns>Enumeration of services and their state.</returns>
+        /// <exception cref="Win32Exception">Thrown if the underlying API call fails.</exception>
         IEnumerable<ENUM_SERVICE_STATUS> EnumDependentServices(SERVICE_STATE_FLAGS states);
 
         QUERY_SERVICE_CONFIG QueryServiceConfig();
