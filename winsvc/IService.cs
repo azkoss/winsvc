@@ -120,6 +120,21 @@ namespace winsvc
         /// <exception cref="Win32Exception">Thrown if the underlying API call fails.</exception>
         void ControlEx(SERVICE_CONTROL control, ref SERVICE_CONTROL_STATUS_REASON_PARAMS reason);
 
+        /// <summary>
+        /// Marks the specified service for deletion from the service control manager database.
+        /// 
+        /// The DeleteService function marks a service for deletion from the service control manager
+        /// database. The database entry is not removed until all open handles to the service have been 
+        /// closed, and the service is not running.
+        /// 
+        /// A running service is stopped by a call to the ControlService function with the 
+        /// SERVICE_CONTROL_STOP control code. If the service cannot be stopped, the 
+        /// database entry is removed when the system is restarted. 
+        /// 
+        /// The service control manager deletes the service by deleting the service key and its 
+        /// subkeys from the registry.
+        /// </summary>
+        /// <exception cref="Win32Exception">Thrown if the underlying API call fails.</exception>
         void Delete();
 
         IEnumerable<ENUM_SERVICE_STATUS> EnumDependentServices(SERVICE_STATE_FLAGS states);
