@@ -104,7 +104,7 @@ namespace winsvc
 
             if (NativeMethods.EnumServicesStatus(handle, serviceType, serviceState, IntPtr.Zero, 0, ref needed, ref servicesReturned, ref resumeHandle))
             {
-                throw new ApplicationException("Unexpected success enumerating services with zero buffer");
+                throw new Win32Exception(0, $"Unexpected success in {nameof(ServiceControlManager)}.{nameof(EnumServicesStatus)}");
             }
 
             // We expect an ERROR_MORE_DATA error as the buffer size passed in was zero, otherwise something strage is going on
@@ -152,7 +152,7 @@ namespace winsvc
                 ref resumeHandle, 
                 null))
             {
-                throw new ApplicationException("Unexpected success enumerating services with zero buffer");
+                throw new Win32Exception(0, $"Unexpected success in {nameof(ServiceControlManager)}.{nameof(EnumServicesStatusEx)}");
             }
 
             // We expect an ERROR_MORE_DATA error as the buffer size passed in was zero, otherwise something strage is going on
@@ -198,7 +198,7 @@ namespace winsvc
 
             if (NativeMethods.GetServiceKeyName(handle, displayName, IntPtr.Zero, ref needed))
             {
-                throw new ApplicationException($"Unexpected success in {nameof(ServiceControlManager)}.{nameof(GetServiceKeyName)}");
+                throw new Win32Exception(0, $"Unexpected success in {nameof(ServiceControlManager)}.{nameof(GetServiceKeyName)}");
             }
 
             if (Marshal.GetLastWin32Error() != ERROR_INSUFFICIENT_BUFFER)
@@ -231,7 +231,7 @@ namespace winsvc
 
             if (NativeMethods.GetServiceDisplayName(handle, serviceName, IntPtr.Zero, ref needed))
             {
-                throw new ApplicationException($"Unexpected success in {nameof(ServiceControlManager)}.{nameof(GetServiceKeyName)}");
+                throw new Win32Exception(0, $"Unexpected success in {nameof(ServiceControlManager)}.{nameof(GetServiceKeyName)}");
             }
 
             if (Marshal.GetLastWin32Error() != ERROR_INSUFFICIENT_BUFFER)

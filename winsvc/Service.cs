@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
 using Microsoft.Win32.SafeHandles;
 using winsvc.Enumerations;
@@ -71,7 +72,7 @@ namespace winsvc
             int needed = 0;
             if (NativeMethods.QueryServiceConfig(handle, IntPtr.Zero, 0, ref needed))
             {
-                throw new ApplicationException("Unexpected success querying service config");
+                throw new Win32Exception(0, $"Unexpected success in {nameof(Service)}.{nameof(QueryConfig)}");
             }
 
             if (Marshal.GetLastWin32Error() != ERROR_INSUFFICIENT_BUFFER)
@@ -143,7 +144,7 @@ namespace winsvc
 
             if (NativeMethods.QueryServiceStatusEx(handle, SC_STATUS_PROCESS_INFO, IntPtr.Zero, 0, ref needed))
             {
-                throw new ApplicationException($"Unexpected success in {nameof(Service)}.{nameof(QueryStatusEx)}");
+                throw new Win32Exception(0, $"Unexpected success in {nameof(Service)}.{nameof(QueryStatusEx)}");
             }
 
             // We expect an ERROR_MORE_DATA error as the buffer size passed in was zero, otherwise something strage is going on
@@ -234,7 +235,7 @@ namespace winsvc
 
             if (NativeMethods.QueryServiceConfig2(handle, (uint) level, IntPtr.Zero, 0, ref needed))
             {
-                throw new ApplicationException("Unexpected success querying service config2");
+                throw new Win32Exception(0, $"Unexpected success in {nameof(Service)}.{nameof(QueryServiceConfig2)}");
             }
 
             if (Marshal.GetLastWin32Error() != ERROR_INSUFFICIENT_BUFFER)
@@ -265,7 +266,9 @@ namespace winsvc
                 return SERVICE_CONFIG.SERVICE_CONFIG_DESCRIPTION;
             }
 
-            throw new ApplicationException($"Unrecognised type: {typeof(T)}");
+            Debug.Assert(false, $"Unrecognised type {typeof(T)}");
+
+            return SERVICE_CONFIG.SERVICE_CONFIG_DESCRIPTION;
         }
     }
 }
