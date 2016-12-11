@@ -66,7 +66,7 @@ namespace winsvc
             }
         }
 
-        public QUERY_SERVICE_CONFIG QueryServiceConfig()
+        public QUERY_SERVICE_CONFIG QueryConfig()
         {
             int needed = 0;
             if (NativeMethods.QueryServiceConfig(handle, IntPtr.Zero, 0, ref needed))
@@ -126,7 +126,7 @@ namespace winsvc
             }
         }
 
-        public SERVICE_STATUS QueryServiceStatus()
+        public SERVICE_STATUS QueryStatus()
         {
             var status = new SERVICE_STATUS();
             if (!NativeMethods.QueryServiceStatus(handle, ref status))
@@ -137,13 +137,13 @@ namespace winsvc
             return status;
         }
 
-        public SERVICE_STATUS_PROCESS QueryServiceStatusEx()
+        public SERVICE_STATUS_PROCESS QueryStatusEx()
         {
             int needed = 0;
 
             if (NativeMethods.QueryServiceStatusEx(handle, SC_STATUS_PROCESS_INFO, IntPtr.Zero, 0, ref needed))
             {
-                throw new ApplicationException($"Unexpected success in {nameof(Service)}.{nameof(QueryServiceStatusEx)}");
+                throw new ApplicationException($"Unexpected success in {nameof(Service)}.{nameof(QueryStatusEx)}");
             }
 
             // We expect an ERROR_MORE_DATA error as the buffer size passed in was zero, otherwise something strage is going on

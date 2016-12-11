@@ -18,7 +18,7 @@ namespace winsvc.tests
 
         public static void WaitForServiceStatus(this IService service, SERVICE_STATE state)
         {
-            while (service.QueryServiceStatus().dwCurrentState != state)
+            while (service.QueryStatus().dwCurrentState != state)
             {
                 Thread.Sleep(10);
             }
@@ -31,7 +31,7 @@ namespace winsvc.tests
 
         private static void WaitForServiceToStop(this IService service)
         {
-            while (service.QueryServiceStatus().dwCurrentState != SERVICE_STATE.SERVICE_STOPPED)
+            while (service.QueryStatus().dwCurrentState != SERVICE_STATE.SERVICE_STOPPED)
             {
                 Thread.Sleep(10);
             }

@@ -109,13 +109,13 @@ namespace winsvc.tests
             using (var scm = ServiceControlManager.OpenServiceControlManager(null, SCM_ACCESS.SC_MANAGER_CREATE_SERVICE))
             using (var service = ServiceControlManagerTests.CreateDummyService(scm))
             {
-                Assert.That(service.QueryServiceStatus().dwCurrentState, Is.EqualTo(SERVICE_STATE.SERVICE_STOPPED));
+                Assert.That(service.QueryStatus().dwCurrentState, Is.EqualTo(SERVICE_STATE.SERVICE_STOPPED));
 
                 service.Start();
 
                 service.WaitForServiceToStart();
 
-                Assert.That(service.QueryServiceStatus().dwCurrentState, Is.EqualTo(SERVICE_STATE.SERVICE_RUNNING));
+                Assert.That(service.QueryStatus().dwCurrentState, Is.EqualTo(SERVICE_STATE.SERVICE_RUNNING));
 
                 service.StopServiceAndWait();
             }
@@ -127,7 +127,7 @@ namespace winsvc.tests
             using (var scm = ServiceControlManager.OpenServiceControlManager(null, SCM_ACCESS.SC_MANAGER_CREATE_SERVICE))
             using (var service = ServiceControlManagerTests.CreateDummyService(scm))
             {
-                var config = service.QueryServiceConfig();
+                var config = service.QueryConfig();
 
                 Assert.That(config.DisplayName, Is.EqualTo(DummyService.DisplayName));
 
@@ -141,12 +141,12 @@ namespace winsvc.tests
             using (var scm = ServiceControlManager.OpenServiceControlManager(null, SCM_ACCESS.SC_MANAGER_CREATE_SERVICE))
             using (var service = ServiceControlManagerTests.CreateDummyService(scm))
             {
-                var status = service.QueryServiceStatusEx();
+                var status = service.QueryStatusEx();
                 Assert.That(status.currentState, Is.EqualTo(SERVICE_STATE.SERVICE_STOPPED));
 
                 service.Start();
                 service.WaitForServiceToStart();
-                Assert.That(service.QueryServiceStatusEx().currentState, Is.EqualTo(SERVICE_STATE.SERVICE_RUNNING));
+                Assert.That(service.QueryStatusEx().currentState, Is.EqualTo(SERVICE_STATE.SERVICE_RUNNING));
 
                 service.StopServiceAndWait();
             }
@@ -199,7 +199,7 @@ namespace winsvc.tests
                     null,
                     null,
                     null);
-                Assert.That(service.QueryServiceConfig().ServiceType, Is.EqualTo((uint) SERVICE_TYPE.SERVICE_WIN32_SHARE_PROCESS));
+                Assert.That(service.QueryConfig().ServiceType, Is.EqualTo((uint) SERVICE_TYPE.SERVICE_WIN32_SHARE_PROCESS));
                 
                 // Set start type to disabled
                 service.ChangeServiceConfig(
@@ -213,7 +213,7 @@ namespace winsvc.tests
                     null,
                     null,
                     null);
-                Assert.That(service.QueryServiceConfig().StartType, Is.EqualTo((uint) SERVICE_START_TYPE.SERVICE_DISABLED));
+                Assert.That(service.QueryConfig().StartType, Is.EqualTo((uint) SERVICE_START_TYPE.SERVICE_DISABLED));
 
                 // Set error control to critical
                 service.ChangeServiceConfig(
@@ -227,7 +227,7 @@ namespace winsvc.tests
                     null,
                     null,
                     null);
-                Assert.That(service.QueryServiceConfig().ErrorControl,
+                Assert.That(service.QueryConfig().ErrorControl,
                     Is.EqualTo((uint) SERVICE_ERROR_CONTROL.SERVICE_ERROR_CRITICAL));
 
                 service.ChangeServiceConfig(
@@ -241,7 +241,7 @@ namespace winsvc.tests
                     null,
                     null,
                     "New Display Name");
-                Assert.That(service.QueryServiceConfig().DisplayName, Is.EqualTo("New Display Name"));
+                Assert.That(service.QueryConfig().DisplayName, Is.EqualTo("New Display Name"));
             }
         }
 

@@ -24,7 +24,7 @@ namespace winsvc.tests
         {
             using (var service = scm.OpenService(name, SERVICE_ACCESS.SERVICE_ALL_ACCESS))
             {
-                if (service.QueryServiceStatus().dwCurrentState == SERVICE_STATE.SERVICE_RUNNING)
+                if (service.QueryStatus().dwCurrentState == SERVICE_STATE.SERVICE_RUNNING)
                 {
                     service.StopServiceAndWait();
                 }

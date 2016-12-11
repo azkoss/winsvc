@@ -153,7 +153,7 @@ namespace winsvc
         /// </summary>
         /// <returns>QUERY_SERVICE_CONFIG struct.</returns>
         /// <exception cref="Win32Exception">Thrown if the underlying API call fails.</exception>
-        QUERY_SERVICE_CONFIG QueryServiceConfig();
+        QUERY_SERVICE_CONFIG QueryConfig();
 
         /// <summary>
         /// Retrieves the current status of the specified service. This function has been superseded 
@@ -163,14 +163,14 @@ namespace winsvc
         /// </summary>
         /// <returns>SERVICE_STATUS struct.</returns>
         /// <exception cref="Win32Exception">Thrown if the underlying API call fails.</exception>
-        SERVICE_STATUS QueryServiceStatus();
+        SERVICE_STATUS QueryStatus();
 
         /// <summary>
         /// Retrieves the current status of the specified service
         /// </summary>
         /// <returns>SERVICE_STATUS_PROCESS struct.</returns>
         /// <exception cref="Win32Exception">Thrown if the underlying API call fails.</exception>
-        SERVICE_STATUS_PROCESS QueryServiceStatusEx();
+        SERVICE_STATUS_PROCESS QueryStatusEx();
 
         /// <summary>
         /// Starts a service.
