@@ -148,13 +148,46 @@ namespace winsvc
         /// <exception cref="Win32Exception">Thrown if the underlying API call fails.</exception>
         IEnumerable<ENUM_SERVICE_STATUS> EnumDependentServices(SERVICE_STATE_FLAGS states);
 
+        /// <summary>
+        /// Retrieves the configuration parameters of the specified service.
+        /// </summary>
+        /// <returns>QUERY_SERVICE_CONFIG struct.</returns>
+        /// <exception cref="Win32Exception">Thrown if the underlying API call fails.</exception>
         QUERY_SERVICE_CONFIG QueryServiceConfig();
 
+        /// <summary>
+        /// Retrieves the current status of the specified service. This function has been superseded 
+        /// by the QueryServiceStatusEx function.QueryServiceStatusEx returns the same information 
+        /// QueryServiceStatus returns, with the addition of the process identifier and additional 
+        /// information for the service.
+        /// </summary>
+        /// <returns>SERVICE_STATUS struct.</returns>
+        /// <exception cref="Win32Exception">Thrown if the underlying API call fails.</exception>
         SERVICE_STATUS QueryServiceStatus();
 
+        /// <summary>
+        /// Retrieves the current status of the specified service
+        /// </summary>
+        /// <returns>SERVICE_STATUS_PROCESS struct.</returns>
+        /// <exception cref="Win32Exception">Thrown if the underlying API call fails.</exception>
         SERVICE_STATUS_PROCESS QueryServiceStatusEx();
 
+        /// <summary>
+        /// Starts a service.
+        /// </summary>
+        /// <exception cref="Win32Exception">Thrown if the underlying API call fails.</exception>
         void Start();
+
+        /// <summary>
+        /// Starts a service
+        /// </summary>
+        /// <param name="serviceArgVectors">
+        /// The strings to be passed to the ServiceMain function for the service as arguments. If 
+        /// there are no arguments, this parameter can be NULL. Otherwise, the first argument 
+        /// (lpServiceArgVectors[0]) is the name of the service, followed by any additional 
+        /// arguments (lpServiceArgVectors[1] through lpServiceArgVectors[dwNumServiceArgs-1])
+        /// </param>
+        /// <exception cref="Win32Exception">Thrown if the underlying API call fails.</exception>
         void Start(string[] serviceArgVectors);
     }
 }
