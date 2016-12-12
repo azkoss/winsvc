@@ -4,14 +4,10 @@
 //////////////////////////////////////////////////////////////////////
 
 var target = Argument("target", "Default");
-var configuration = Argument("configuration", "Release");
 
-//////////////////////////////////////////////////////////////////////
-// PREPARATION
-//////////////////////////////////////////////////////////////////////
+var debugConfiguration = Argument("configuration", "Debug");
+var releaseConfiguration = Argument("configuration", "Release");
 
-// Define directories.
-var buildDir = Directory("./src/Example/bin") + Directory(configuration);
 
 //////////////////////////////////////////////////////////////////////
 // TASKS
@@ -28,7 +24,16 @@ Task("Build")
     .IsDependentOn("Restore-NuGet-Packages")
     .Does(() =>
 {
-    MSBuild("./winsvc.sln", settings => settings.SetConfiguration(configuration));
+    MSBuild("./winsvc.sln", settings => 
+    {
+        settings.SetConfiguration(debugConfiguration);
+        settings.Verbosity = Verbosity.Quiet; 
+    });
+    MSBuild("./winsvc.sln", settings => 
+    {
+        settings.SetConfiguration(releaseConfiguration);
+        settings.Verbosity = Verbosity.Quiet; 
+    });
 });
 
 Task("Run-Unit-Tests")
