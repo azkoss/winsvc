@@ -17,7 +17,7 @@ Task("Restore-NuGet-Packages")
     NuGetRestore("./winsvc.sln");
 });
 
-Task("Build")
+Task("Debug-Build")
     .IsDependentOn("Restore-NuGet-Packages")
     .Does(() =>
 {
@@ -26,12 +26,22 @@ Task("Build")
         settings.SetConfiguration("Debug");
         settings.Verbosity = Verbosity.Quiet; 
     });
+});
+
+Task("Release-Build")
+    .IsDependentOn("Restore-NuGet-Packages")
+    .Does(() =>
+{
     MSBuild("./winsvc.sln", settings => 
     {
         settings.SetConfiguration("Release");
         settings.Verbosity = Verbosity.Quiet; 
     });
 });
+
+Task("Build")
+    .IsDependentOn("Debug-Build")
+    .IsDependentOn("Release-Build");
 
 Task("Run-Unit-Tests-Debug-x64")
     .IsDependentOn("Build")
