@@ -33,7 +33,7 @@ Task("Build")
     });
 });
 
-Task("Run-Unit-Tests-x64")
+Task("Run-Unit-Tests-Debug-x64")
     .IsDependentOn("Build")
     .Does(() =>
 {
@@ -41,13 +41,9 @@ Task("Run-Unit-Tests-x64")
         NoResults = true,
         X86 = false,
         });
-    NUnit3(@".\winsvc.tests\bin\Release\winsvc.tests.dll", new NUnit3Settings {
-        NoResults = true,
-        X86 = false,
-        });
 });
 
-Task("Run-Unit-Tests-x86")
+Task("Run-Unit-Tests-Debug-x86")
     .IsDependentOn("Build")
     .Does(() =>
 {
@@ -55,6 +51,22 @@ Task("Run-Unit-Tests-x86")
         NoResults = true,
         X86 = true,
         });
+});
+
+Task("Run-Unit-Tests-Release-x64")
+    .IsDependentOn("Build")
+    .Does(() =>
+{
+    NUnit3(@".\winsvc.tests\bin\Release\winsvc.tests.dll", new NUnit3Settings {
+        NoResults = true,
+        X86 = false,
+        });
+});
+
+Task("Run-Unit-Tests-Release-x86")
+    .IsDependentOn("Build")
+    .Does(() =>
+{
     NUnit3(@".\winsvc.tests\bin\Release\winsvc.tests.dll", new NUnit3Settings {
         NoResults = true,
         X86 = true,
@@ -62,8 +74,10 @@ Task("Run-Unit-Tests-x86")
 });
 
 Task("Run-Unit-Tests")
-    .IsDependentOn("Run-Unit-Tests-x86")
-    .IsDependentOn("Run-Unit-Tests-x64");
+    .IsDependentOn("Run-Unit-Tests-Debug-x86")
+    .IsDependentOn("Run-Unit-Tests-Debug-x64")
+    .IsDependentOn("Run-Unit-Tests-Release-x86")
+    .IsDependentOn("Run-Unit-Tests-Release-x64");
 
 //////////////////////////////////////////////////////////////////////
 // TASK TARGETS
