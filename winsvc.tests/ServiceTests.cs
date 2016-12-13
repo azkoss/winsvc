@@ -34,7 +34,7 @@ namespace winsvc.tests
         }
 
         [Test]
-        public void StartService()
+        public void Start()
         {
             using (var scm = ServiceControlManager.OpenServiceControlManager(null, SCM_ACCESS.SC_MANAGER_CREATE_SERVICE))
             using (var service = ServiceControlManagerTests.CreateDummyService(scm))
@@ -47,7 +47,7 @@ namespace winsvc.tests
         }
 
         [Test]
-        public void StartServiceWithParameters()
+        public void StartWithParameters()
         {
             using (var scm = ServiceControlManager.OpenServiceControlManager(null, SCM_ACCESS.SC_MANAGER_CREATE_SERVICE))
             using (var service = ServiceControlManagerTests.CreateDummyService(scm))
@@ -60,7 +60,7 @@ namespace winsvc.tests
         }
 
         [Test]
-        public void ControlService()
+        public void Control()
         {
             using (var scm = ServiceControlManager.OpenServiceControlManager(null, SCM_ACCESS.SC_MANAGER_CREATE_SERVICE))
             using (var service = ServiceControlManagerTests.CreateDummyService(scm))
@@ -81,7 +81,7 @@ namespace winsvc.tests
 
 
         [Test]
-        public void ControlServiceEx()
+        public void ControlEx()
         {
             using (var scm = ServiceControlManager.OpenServiceControlManager(null, SCM_ACCESS.SC_MANAGER_CREATE_SERVICE))
             using (var service = ServiceControlManagerTests.CreateDummyService(scm))
@@ -104,7 +104,7 @@ namespace winsvc.tests
 
 
         [Test]
-        public void QueryServiceStatus()
+        public void QueryStatus()
         {
             using (var scm = ServiceControlManager.OpenServiceControlManager(null, SCM_ACCESS.SC_MANAGER_CREATE_SERVICE))
             using (var service = ServiceControlManagerTests.CreateDummyService(scm))
@@ -122,7 +122,7 @@ namespace winsvc.tests
         }
 
         [Test]
-        public void QueryServiceConfig()
+        public void QueryConfig()
         {
             using (var scm = ServiceControlManager.OpenServiceControlManager(null, SCM_ACCESS.SC_MANAGER_CREATE_SERVICE))
             using (var service = ServiceControlManagerTests.CreateDummyService(scm))
@@ -136,7 +136,7 @@ namespace winsvc.tests
         }
 
         [Test]
-        public void QueryServiceStatusEx()
+        public void QueryStatusEx()
         {
             using (var scm = ServiceControlManager.OpenServiceControlManager(null, SCM_ACCESS.SC_MANAGER_CREATE_SERVICE))
             using (var service = ServiceControlManagerTests.CreateDummyService(scm))
@@ -153,7 +153,7 @@ namespace winsvc.tests
         }
 
         [Test]
-        public void ChangeServiceConfig()
+        public void ChangeConfig()
         {
             using (var scm = ServiceControlManager.OpenServiceControlManager(null, SCM_ACCESS.SC_MANAGER_CREATE_SERVICE))
             using (var service = ServiceControlManagerTests.CreateDummyService(scm))
@@ -246,7 +246,7 @@ namespace winsvc.tests
         }
 
         [Test]
-        public void ChangeServiceCOnfigDependentServices()
+        public void ChangeConfigDependentServices()
         {
             using (var scm = ServiceControlManager.OpenServiceControlManager(null, SCM_ACCESS.SC_MANAGER_CREATE_SERVICE | SCM_ACCESS.SC_MANAGER_ENUMERATE_SERVICE))
             using (var service = ServiceControlManagerTests.CreateDummyService(scm))
