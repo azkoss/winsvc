@@ -88,7 +88,19 @@ namespace winsvc
                     throw new Win32Exception();
                 }
 
-                return (QUERY_SERVICE_CONFIG) Marshal.PtrToStructure(bufferPtr, typeof(QUERY_SERVICE_CONFIG));
+                var privateConfig = (QUERY_SERVICE_CONFIG_PRIVATE) Marshal.PtrToStructure(bufferPtr, typeof(QUERY_SERVICE_CONFIG_PRIVATE));
+                return new QUERY_SERVICE_CONFIG
+                {
+                    BinaryPathName = privateConfig.BinaryPathName,
+                    Dependencies = privateConfig.Dependencies.Split('\0'),
+                    DisplayName = privateConfig.DisplayName,
+                    ErrorControl = privateConfig.ErrorControl,
+                    LoadOrderGroup = privateConfig.LoadOrderGroup,
+                    ServiceStartName = privateConfig.ServiceStartName,
+                    ServiceType = privateConfig.ServiceType,
+                    StartType = privateConfig.StartType,
+                    TagId = privateConfig.TagId,
+                };
             }
             finally
             {
@@ -142,7 +154,7 @@ namespace winsvc
             }
             finally
             {
-                Marshal.DestroyStructure(ptr, typeof(T));
+                Marshal.DestroyStructure(ptr, typeof(T)); // Clean up any strings
                 Marshal.FreeHGlobal(ptr);
             }
         }
