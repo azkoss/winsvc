@@ -11,12 +11,6 @@ namespace winsvc
     public interface IService : IDisposable
     {
         /// <summary>
-        /// Get or set the description  of the service.
-        /// </summary>
-        /// <exception cref="Win32Exception">Thrown if the underlying API call fails.</exception>
-        string Description { get; set; }
-
-        /// <summary>
         /// Changes the configuration parameters of a service.
         /// </summary>
         /// <param name="serviceType">
@@ -91,6 +85,8 @@ namespace winsvc
             string     displayName
         );
 
+        void ChangeConfig2<T>(ref T info);
+
         /// <summary>
         /// Sends a control code to a service.
         /// 
@@ -154,6 +150,8 @@ namespace winsvc
         /// <returns>QUERY_SERVICE_CONFIG struct.</returns>
         /// <exception cref="Win32Exception">Thrown if the underlying API call fails.</exception>
         QUERY_SERVICE_CONFIG QueryConfig();
+
+        T QueryConfig2<T>();
 
         /// <summary>
         /// Retrieves the current status of the specified service. This function has been superseded 

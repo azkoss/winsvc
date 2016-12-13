@@ -127,6 +127,26 @@ namespace winsvc
             }
         }
 
+        public void ChangeConfig2<T>(ref T info)
+        {
+            var level = (int) GetLevel<T>();
+            IntPtr ptr = Marshal.AllocHGlobal(Marshal.SizeOf(info));
+
+            try
+            {
+                Marshal.StructureToPtr(info, ptr, false);
+                if (!NativeMethods.ChangeServiceConfig2(handle, level, ptr))
+                {
+                    throw new Win32Exception();
+                }
+            }
+            finally
+            {
+                Marshal.DestroyStructure(ptr, typeof(T));
+                Marshal.FreeHGlobal(ptr);
+            }
+        }
+
         public SERVICE_STATUS QueryStatus()
         {
             var status = new SERVICE_STATUS();
@@ -211,31 +231,14 @@ namespace winsvc
             }
         }
 
-        public string Description
-        {
-            get
-            {
-                return QueryServiceConfig2<SERVICE_DESCRIPTION>().Description;
-            }
-            set
-            {
-                var description = new SERVICE_DESCRIPTION {Description = value};
-
-                if (!NativeMethods.ChangeServiceConfig2(handle, (int) SERVICE_CONFIG.SERVICE_CONFIG_DESCRIPTION, ref description))
-                {
-                    throw new Win32Exception();
-                }
-            }
-        }
-
-        private T QueryServiceConfig2<T>()
+        public T QueryConfig2<T>()
         {
             var level = GetLevel<T>();
             int needed = 0;
 
             if (NativeMethods.QueryServiceConfig2(handle, (uint) level, IntPtr.Zero, 0, ref needed))
             {
-                throw new Win32Exception(0, $"Unexpected success in {nameof(Service)}.{nameof(QueryServiceConfig2)}");
+                throw new Win32Exception(0, $"Unexpected success in {nameof(Service)}.{nameof(QueryConfig2)}");
             }
 
             if (Marshal.GetLastWin32Error() != ERROR_INSUFFICIENT_BUFFER)
