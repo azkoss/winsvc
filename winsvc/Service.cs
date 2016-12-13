@@ -96,7 +96,7 @@ namespace winsvc
             }
         }
 
-        public void ChangeServiceConfig(
+        public void ChangeConfig(
             SERVICE_TYPE serviceType, 
             SERVICE_START_TYPE startType, 
             SERVICE_ERROR_CONTROL errorControl, 

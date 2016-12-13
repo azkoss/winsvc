@@ -159,7 +159,7 @@ namespace winsvc.tests
             using (var service = ServiceControlManagerTests.CreateDummyService(scm))
             {
                 // No changes should not throw
-                service.ChangeServiceConfig(
+                service.ChangeConfig(
                     SERVICE_TYPE.SERVICE_NO_CHANGE, 
                     SERVICE_START_TYPE.SERVICE_NO_CHANGE,
                     SERVICE_ERROR_CONTROL.SERVICE_NO_CHANGE,
@@ -172,7 +172,7 @@ namespace winsvc.tests
                     null);
 
                 // Set service type to share process
-                service.ChangeServiceConfig(
+                service.ChangeConfig(
                     SERVICE_TYPE.SERVICE_WIN32_SHARE_PROCESS, 
                     SERVICE_START_TYPE.SERVICE_NO_CHANGE,
                     SERVICE_ERROR_CONTROL.SERVICE_NO_CHANGE,
@@ -186,7 +186,7 @@ namespace winsvc.tests
                 Assert.That(service.QueryConfig().ServiceType, Is.EqualTo((uint) SERVICE_TYPE.SERVICE_WIN32_SHARE_PROCESS));
                 
                 // Set start type to disabled
-                service.ChangeServiceConfig(
+                service.ChangeConfig(
                     SERVICE_TYPE.SERVICE_NO_CHANGE, 
                     SERVICE_START_TYPE.SERVICE_DISABLED,
                     SERVICE_ERROR_CONTROL.SERVICE_NO_CHANGE,
@@ -200,7 +200,7 @@ namespace winsvc.tests
                 Assert.That(service.QueryConfig().StartType, Is.EqualTo((uint) SERVICE_START_TYPE.SERVICE_DISABLED));
 
                 // Set error control to critical
-                service.ChangeServiceConfig(
+                service.ChangeConfig(
                     SERVICE_TYPE.SERVICE_NO_CHANGE,
                     SERVICE_START_TYPE.SERVICE_NO_CHANGE,
                     SERVICE_ERROR_CONTROL.SERVICE_ERROR_CRITICAL,
@@ -214,7 +214,7 @@ namespace winsvc.tests
                 Assert.That(service.QueryConfig().ErrorControl,
                     Is.EqualTo((uint) SERVICE_ERROR_CONTROL.SERVICE_ERROR_CRITICAL));
 
-                service.ChangeServiceConfig(
+                service.ChangeConfig(
                     SERVICE_TYPE.SERVICE_NO_CHANGE,
                     SERVICE_START_TYPE.SERVICE_NO_CHANGE,
                     SERVICE_ERROR_CONTROL.SERVICE_NO_CHANGE,
@@ -253,7 +253,7 @@ namespace winsvc.tests
             {
                 // Just pick the first service to be dependency
                 var dependentServiceNames = scm.EnumServicesStatus(SERVICE_TYPE.SERVICE_WIN32, SERVICE_STATE_FLAGS.SERVICE_STATE_ALL).Select(ss => ss.ServiceName).Take(1).ToList();
-                service.ChangeServiceConfig(SERVICE_TYPE.SERVICE_NO_CHANGE, SERVICE_START_TYPE.SERVICE_NO_CHANGE, SERVICE_ERROR_CONTROL.SERVICE_NO_CHANGE, null, null, IntPtr.Zero, dependentServiceNames, null, null, null);
+                service.ChangeConfig(SERVICE_TYPE.SERVICE_NO_CHANGE, SERVICE_START_TYPE.SERVICE_NO_CHANGE, SERVICE_ERROR_CONTROL.SERVICE_NO_CHANGE, null, null, IntPtr.Zero, dependentServiceNames, null, null, null);
 
                 using (var dependentService = scm.OpenService(dependentServiceNames.First(), SERVICE_ACCESS.SERVICE_ENUMERATE_DEPENDENTS))
                 {

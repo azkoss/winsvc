@@ -72,7 +72,7 @@ namespace winsvc
         /// manager. Display name comparisons are always case-insensitive.
         /// </param>
         /// <exception cref="Win32Exception">Thrown if the underlying API call fails.</exception>
-        void ChangeServiceConfig(
+        void ChangeConfig(
             SERVICE_TYPE       serviceType,
             SERVICE_START_TYPE       startType,
             SERVICE_ERROR_CONTROL       errorControl,
