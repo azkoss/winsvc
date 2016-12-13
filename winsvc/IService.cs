@@ -85,6 +85,16 @@ namespace winsvc
             string     displayName
         );
 
+        /// <summary>
+        /// Changes the optional configuration parameters of the service.
+        /// </summary>
+        /// <typeparam name="T">
+        /// The type of parameter to set, currently only SERVICE_DESCRIPTION is supported
+        /// </typeparam>
+        /// <param name="info">
+        /// A structure of type T
+        /// </param>
+        /// <exception cref="Win32Exception">Thrown if the underlying API call fails.</exception>
         void ChangeConfig2<T>(ref T info);
 
         /// <summary>
@@ -151,6 +161,14 @@ namespace winsvc
         /// <exception cref="Win32Exception">Thrown if the underlying API call fails.</exception>
         QUERY_SERVICE_CONFIG QueryConfig();
 
+        /// <summary>
+        /// Retrieves the optional configuration parameters of the service.
+        /// </summary>
+        /// <typeparam name="T">
+        /// The type of information to retrieve from the service, currently only SERVICE_DESCRIPTION is supported.
+        /// </typeparam>
+        /// <returns>A structure of type T.</returns>
+        /// <exception cref="Win32Exception">Thrown if the underlying API call fails.</exception>
         T QueryConfig2<T>();
 
         /// <summary>
