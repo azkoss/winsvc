@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>Frogmore.winsvc</id>
+    <version>1.0.0.0</version>
+    <title>winsvc.h wrapper</title>
+    <authors>tonyedgecombe</authors>
+    <owners>tonyedgecombe</owners>
+    <projectUrl>https://github.com/tonyedgecombe/winsvc</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>A thin wrapper around the Windows service functions</description>
+    <releaseNotes>Initial release.</releaseNotes>
+    <copyright>Copyright 2017 Tony Edgecombe</copyright>
+    <tags>Windows Service winsvc.h</tags>
+  </metadata>
+</package>
