@@ -2,7 +2,7 @@
 
 // ReSharper disable InconsistentNaming
 
-namespace winsvc.Flags
+namespace frogmore.winsvc.Flags
 {
     [Flags]
     public enum SERVICE_ACCESS : uint

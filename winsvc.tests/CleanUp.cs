@@ -1,9 +1,9 @@
 using System.Linq;
-using dummy_service;
-using winsvc.Enumerations;
-using winsvc.Flags;
+using frogmore.winsvc.dummy_service;
+using frogmore.winsvc.Enumerations;
+using frogmore.winsvc.Flags;
 
-namespace winsvc.tests
+namespace frogmore.winsvc.tests
 {
     public static class CleanUp
     {

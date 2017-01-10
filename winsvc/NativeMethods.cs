@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Runtime.InteropServices;
-using winsvc.Enumerations;
-using winsvc.Flags;
-using winsvc.Structs;
+using frogmore.winsvc.Enumerations;
+using frogmore.winsvc.Flags;
+using frogmore.winsvc.Structs;
 
-namespace winsvc
+namespace frogmore.winsvc
 {
     // Conventions
 

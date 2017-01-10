@@ -1,12 +1,12 @@
 using System;
 using System.Collections.Generic;
-using winsvc.Enumerations;
-using winsvc.Flags;
-using winsvc.Structs;
+using frogmore.winsvc.Enumerations;
+using frogmore.winsvc.Flags;
+using frogmore.winsvc.Structs;
 
 #pragma warning disable 1584,1711,1572,1581,1580
 
-namespace winsvc
+namespace frogmore.winsvc
 {
     public interface IService : IDisposable
     {

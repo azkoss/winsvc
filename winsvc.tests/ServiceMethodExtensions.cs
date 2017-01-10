@@ -1,7 +1,7 @@
 using System.Threading;
-using winsvc.Enumerations;
+using frogmore.winsvc.Enumerations;
 
-namespace winsvc.tests
+namespace frogmore.winsvc.tests
 {
     internal static class ServiceMethodExtensions
     {

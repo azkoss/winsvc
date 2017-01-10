@@ -7,7 +7,7 @@
     <ProjectGuid>{398CFB77-FF7C-4196-9A02-66F6C1E92FD5}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>winsvc</RootNamespace>
+    <RootNamespace>frogmore.winsvc</RootNamespace>
     <AssemblyName>winsvc</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

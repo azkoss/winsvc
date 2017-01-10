@@ -1,6 +1,6 @@
 ﻿using System.ServiceProcess;
 
-namespace dummy_service
+namespace frogmore.winsvc.dummy_service
 {
     public class DummyService : ServiceBase
     {

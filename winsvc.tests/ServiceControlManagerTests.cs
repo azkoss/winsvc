@@ -1,12 +1,12 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Linq;
-using dummy_service;
+using frogmore.winsvc.dummy_service;
+using frogmore.winsvc.Enumerations;
+using frogmore.winsvc.Flags;
 using NUnit.Framework;
-using winsvc.Enumerations;
-using winsvc.Flags;
 
-namespace winsvc.tests
+namespace frogmore.winsvc.tests
 {
     [TestFixture]
     public class ServiceControlManagerTests

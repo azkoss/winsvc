@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 // ReSharper disable FieldCanBeMadeReadOnly.Global
 // ReSharper disable MemberCanBePrivate.Global
 
-namespace winsvc.Structs
+namespace frogmore.winsvc.Structs
 {
     [StructLayout(LayoutKind.Sequential, Pack = 0, CharSet = CharSet.Unicode)]
     public struct ENUM_SERVICE_STATUS

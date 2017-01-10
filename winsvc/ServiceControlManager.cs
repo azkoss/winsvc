@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.InteropServices;
+using frogmore.winsvc.Enumerations;
+using frogmore.winsvc.Flags;
+using frogmore.winsvc.Structs;
 using Microsoft.Win32.SafeHandles;
-using winsvc.Enumerations;
-using winsvc.Flags;
-using winsvc.Structs;
 
-namespace winsvc
+namespace frogmore.winsvc
 {
     public sealed class ServiceControlManager : SafeHandleZeroOrMinusOneIsInvalid, IServiceControlManager
     {

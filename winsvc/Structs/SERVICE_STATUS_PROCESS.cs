@@ -1,12 +1,13 @@
 ﻿using System.Runtime.InteropServices;
-using winsvc.Enumerations;
-using winsvc.Flags;
+using frogmore.winsvc.Enumerations;
+using frogmore.winsvc.Flags;
+
 // ReSharper disable MemberCanBePrivate.Global
 // ReSharper disable FieldCanBeMadeReadOnly.Global
 
 // ReSharper disable InconsistentNaming
 
-namespace winsvc.Structs
+namespace frogmore.winsvc.Structs
 {
     [StructLayout(LayoutKind.Sequential, Pack = 0, CharSet = CharSet.Unicode)]
     public struct SERVICE_STATUS_PROCESS

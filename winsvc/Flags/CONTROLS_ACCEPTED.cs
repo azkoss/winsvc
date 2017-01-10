@@ -3,7 +3,7 @@ using System;
 // ReSharper disable InconsistentNaming
 // ReSharper disable UnusedMember.Global
 
-namespace winsvc.Flags
+namespace frogmore.winsvc.Flags
 {
     [Flags]
     internal enum CONTROLS_ACCEPTED : uint

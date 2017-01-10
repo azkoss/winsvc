@@ -1,11 +1,11 @@
 ﻿using System.Runtime.InteropServices;
-using winsvc.Flags;
+using frogmore.winsvc.Flags;
 
 // ReSharper disable InconsistentNaming
 // ReSharper disable FieldCanBeMadeReadOnly.Global
 // ReSharper disable MemberCanBePrivate.Global
 
-namespace winsvc.Structs
+namespace frogmore.winsvc.Structs
 {
     [StructLayout(LayoutKind.Sequential, Pack = 0, CharSet = CharSet.Unicode)]
     public struct SERVICE_CONTROL_STATUS_REASON_PARAMS

@@ -1,7 +1,7 @@
 // ReSharper disable InconsistentNaming
 // ReSharper disable UnusedMember.Global
 
-namespace winsvc.Enumerations
+namespace frogmore.winsvc.Enumerations
 {
     public enum SERVICE_ERROR_CONTROL : uint
     {

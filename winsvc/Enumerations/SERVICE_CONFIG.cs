@@ -1,6 +1,6 @@
 // ReSharper disable InconsistentNaming
 // ReSharper disable UnusedMember.Global
-namespace winsvc.Enumerations
+namespace frogmore.winsvc.Enumerations
 {
     internal enum SERVICE_CONFIG : uint
     {

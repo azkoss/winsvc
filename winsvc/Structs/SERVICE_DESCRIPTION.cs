@@ -2,7 +2,7 @@
 
 using System.Runtime.InteropServices;
 
-namespace winsvc.Structs
+namespace frogmore.winsvc.Structs
 {
     [StructLayout(LayoutKind.Sequential, Pack = 0, CharSet = CharSet.Unicode)]
     public struct SERVICE_DESCRIPTION
