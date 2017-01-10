@@ -89,12 +89,24 @@ Task("Run-Unit-Tests")
     .IsDependentOn("Run-Unit-Tests-Release-x86")
     .IsDependentOn("Run-Unit-Tests-Release-x64");
 
-//////////////////////////////////////////////////////////////////////
-// TASK TARGETS
-//////////////////////////////////////////////////////////////////////
+Task("NuGetPack")
+    .IsDependentOn("Run-Unit-Tests")
+    .Does(() => {
+        var settings = new NuGetPackSettings {
+            BasePath = @".\winsvc",
+            OutputDirectory = @".\nuget",
+            Files = new [] {
+                new NuSpecContent {
+                    Source = @".\bin\Release\winsvc.dll",
+                    Target = @"lib\bin",
+                }
+            }
+        };
+        NuGetPack("./winsvc/winsvc.nuspec", settings);
+    });
 
 Task("Default")
-    .IsDependentOn("Run-Unit-Tests");
+    .IsDependentOn("NuGetPack");
 
 //////////////////////////////////////////////////////////////////////
 // EXECUTION
