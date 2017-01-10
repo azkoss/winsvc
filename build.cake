@@ -98,7 +98,11 @@ Task("NuGetPack")
             Files = new [] {
                 new NuSpecContent {
                     Source = @".\bin\Release\winsvc.dll",
-                    Target = @"lib\bin",
+                    Target = @"lib\net40",
+                },
+                new NuSpecContent {
+                    Source = @".\bin\Release\winsvc.xml",
+                    Target = @"lib\net40",
                 }
             }
         };

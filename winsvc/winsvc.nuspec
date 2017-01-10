@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <package >
   <metadata>
-    <id>Frogmore.winsvc</id>
-    <version>1.0.0.0</version>
+    <id>frogmore.winsvc</id>
+    <version>1.0.0</version>
     <title>winsvc.h wrapper</title>
     <authors>tonyedgecombe</authors>
     <owners>tonyedgecombe</owners>
