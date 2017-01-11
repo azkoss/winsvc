@@ -94,7 +94,7 @@ Task("NuGetPack")
     .Does(() => {
         var settings = new NuGetPackSettings {
             BasePath = @".\winsvc",
-            OutputDirectory = @".\nuget",
+            OutputDirectory = @"C:\Data\Builds\nuget\winsvc",
             Files = new [] {
                 new NuSpecContent {
                     Source = @".\bin\Release\winsvc.dll",
