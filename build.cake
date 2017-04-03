@@ -25,6 +25,7 @@ Task("Debug-Build")
     {
         settings.SetConfiguration("Debug");
         settings.Verbosity = Verbosity.Quiet; 
+	    settings.UseToolVersion(MSBuildToolVersion.VS2017);
     });
 });
 
