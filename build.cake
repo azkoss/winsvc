@@ -4,7 +4,7 @@
 //////////////////////////////////////////////////////////////////////
 
 var target = Argument("target", "Default");
-
+var assemblyInfo = ParseAssemblyInfo(@".\winsvc\Properties\AssemblyInfo.cs");
 
 //////////////////////////////////////////////////////////////////////
 // TASKS
@@ -105,7 +105,8 @@ Task("NuGetPack")
                     Source = @".\bin\Release\winsvc.xml",
                     Target = @"lib\net40",
                 }
-            }
+            },
+            Version = assemblyInfo.AssemblyVersion,
         };
         NuGetPack("./winsvc/winsvc.nuspec", settings);
     });
