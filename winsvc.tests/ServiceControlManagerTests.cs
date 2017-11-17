@@ -12,7 +12,7 @@ namespace frogmore.winsvc.tests
     public class ServiceControlManagerTests
     {
         // ReSharper disable once InconsistentNaming
-        const int ERROR_ACCESS_DENIED = 5;
+        private const int ERROR_ACCESS_DENIED = 5;
 
         [SetUp]
         public void Setup()

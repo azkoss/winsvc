@@ -17,7 +17,7 @@ namespace frogmore.winsvc.Flags
         SERVICE_PAUSE_CONTINUE = 0x00040,
         SERVICE_INTERROGATE = 0x00080,
         SERVICE_USER_DEFINED_CONTROL = 0x00100,
-        SERVICE_ALL_ACCESS = (STANDARD_RIGHTS_REQUIRED |
+        SERVICE_ALL_ACCESS =  STANDARD_RIGHTS_REQUIRED |
                               SERVICE_QUERY_CONFIG |
                               SERVICE_CHANGE_CONFIG |
                               SERVICE_QUERY_STATUS |
@@ -26,6 +26,6 @@ namespace frogmore.winsvc.Flags
                               SERVICE_STOP |
                               SERVICE_PAUSE_CONTINUE |
                               SERVICE_INTERROGATE |
-                              SERVICE_USER_DEFINED_CONTROL)
+                              SERVICE_USER_DEFINED_CONTROL
     }
 }
