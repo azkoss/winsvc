@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Runtime.InteropServices;
 using frogmore.winsvc.Enumerations;
 using frogmore.winsvc.Flags;
@@ -281,9 +280,7 @@ namespace frogmore.winsvc
                 return SERVICE_CONFIG.SERVICE_CONFIG_DESCRIPTION;
             }
 
-            Debug.Assert(false, $"Unrecognised type {typeof(T)}");
-
-            return SERVICE_CONFIG.SERVICE_CONFIG_DESCRIPTION;
+            throw new ApplicationException($"Unrecognised type {typeof(T)}");
         }
     }
 }
