@@ -4,7 +4,7 @@
 //////////////////////////////////////////////////////////////////////
 
 var target = Argument("target", "Default");
-var assemblyInfo = ParseAssemblyInfo(@".\winsvc\Properties\AssemblyInfo.cs");
+var version = DateTime.Now.ToString("yyyy.MM.dd.HHmm");
 
 //////////////////////////////////////////////////////////////////////
 // TASKS
@@ -17,8 +17,28 @@ Task("Restore-NuGet-Packages")
     NuGetRestore("./winsvc.sln");
 });
 
-Task("Debug-Build")
+Task("Set-version-information")
     .IsDependentOn("Restore-NuGet-Packages")
+    .Does(() =>
+    {
+        Information("Version: " + version);
+
+        var settings = new AssemblyInfoSettings
+        {
+            Company = "Tony Edgecombe",
+            Product = "winsvc",
+            Copyright = string.Format("{0} Tony Edgecombe", DateTime.Now.Year),
+            Version = version,
+            FileVersion = version,
+            Description = "Thin wrapper around winsvc.h functions and structures",
+            Title = "winsvc",
+        };
+        
+        CreateAssemblyInfo("GlobalSolutionInfo.cs", settings);
+    });
+
+Task("Debug-Build")
+    .IsDependentOn("Set-version-information")
     .Does(() =>
 {
     MSBuild("./winsvc.sln", settings => 
@@ -30,7 +50,7 @@ Task("Debug-Build")
 });
 
 Task("Release-Build")
-    .IsDependentOn("Restore-NuGet-Packages")
+    .IsDependentOn("Set-version-information")
     .Does(() =>
 {
     MSBuild("./winsvc.sln", settings => 
@@ -106,7 +126,7 @@ Task("NuGetPack")
                     Target = @"lib\net40",
                 }
             },
-            Version = assemblyInfo.AssemblyVersion,
+            Version = version,
         };
         NuGetPack("./winsvc/winsvc.nuspec", settings);
     });
